@@ -9,8 +9,9 @@ import os
 def get_documents():
    if "documents" not in st.session_state:
       uploaded_file = st.file_uploader("Upload your file here...")
-      st.session_state["documents"]=uploaded_file.content
-      return uploaded_file.content
+      if uploaded_file is not None:
+        st.session_state["documents"]=uploaded_file.content
+        return uploaded_file.content
 def get_text(instruction: str = "You: "):
     input_text = st.text_input(instruction, "", key=f"input-{instruction}")
     return input_text
