@@ -6,12 +6,9 @@ name = "pypi"
 [packages]
 langchain = "*"
 streamlit = "*"
-gitpython = "*"
 streamlit-chat = "*"
 streamlit-extras = "*"
-google-generativeai = "*"
-pinecone-client = "*"
-openai = "*"
+faiss-cpu="*"
 tiktoken = "*"
 google-cloud-aiplatform = "*"
 

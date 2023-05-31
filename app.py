@@ -2,10 +2,14 @@ import streamlit as st
 from streamlit_chat import message
 from streamlit_extras.colored_header import colored_header
 from streamlit_extras.add_vertical_space import add_vertical_space
-from backend.backend import run_llm, run_g_llm
+from backend.backend import run_g_llm
 import os
 
 
+def get_documents():
+   if "documents" not in st.session_state:
+      uploaded_file = st.file_uploader("Upload your file here...")
+      st.session_state.documents.append(uploaded_file.content)
 def get_text(instruction: str = "You: "):
     input_text = st.text_input(instruction, "", key=f"input-{instruction}")
     return input_text
@@ -50,6 +54,7 @@ response_container = st.container()
 
 
 with input_container:
+    documents=get_documents()
     user_input = get_text(instruction="You: ")
 
 
@@ -58,7 +63,7 @@ with response_container:
     if user_input:
         with st.spinner("Generating response..."):
             response = run_g_llm(
-                query=user_input, chat_history=st.session_state["chat_history"]
+                st.session_state["documents"], query=user_input, chat_history=st.session_state["chat_history"]
             )
             st.session_state.past.append(user_input)
             st.session_state.generated.append(response["answer"])
