@@ -9,7 +9,8 @@ import os
 def get_documents():
    if "documents" not in st.session_state:
       uploaded_file = st.file_uploader("Upload your file here...")
-      st.session_state.documents.append(uploaded_file.content)
+      st.session_state["documents"]=uploaded_file.content
+      return uploaded_file.content
 def get_text(instruction: str = "You: "):
     input_text = st.text_input(instruction, "", key=f"input-{instruction}")
     return input_text
@@ -37,8 +38,6 @@ with st.sidebar:
     #     palm_api_key = get_text(instruction="PALM2_API_KEY")
     #     if palm_api_key:
     #         os.environ["PALM_2_API_KEY"]
-
-    st.write("Made by [Eden Marco](https://www.linkedin.com/in/eden-marco/)")
 
 if "generated" not in st.session_state:
     st.session_state["generated"] = ["I'm CodePen, How may I help you?"]
