@@ -60,9 +60,9 @@ response_container = st.container()
 
 with input_container:
     documents=get_documents()
-    url=get_url(instruction="URL to ask:")
+   # url=get_url(instruction="URL to ask:")
     user_input = get_text(instruction="Your Question: ")
-    st.session_state["url"]=url
+    ## st.session_state["url"]=url
     st.session_state["documents"]=documents
     st.session_state["generated"]=["I'm ready, How may I help you?"]
 
