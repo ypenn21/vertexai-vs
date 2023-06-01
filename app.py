@@ -17,6 +17,10 @@ def get_text(instruction: str = "You: "):
     input_text = st.text_input(instruction, "", key=f"input-{instruction}")
     return input_text
 
+def get_url(instruction: str = "http://www.google.com"):
+    input_url = st.text_input(instruction, "", key=f"input-{instruction}")
+    return input_url
+
 
 st.set_page_config(page_title="Talk2File - An LLM-powered File Search")
 with st.sidebar:
@@ -57,6 +61,10 @@ response_container = st.container()
 with input_container:
     documents=get_documents()
     user_input = get_text(instruction="You: ")
+    url=get_url(instruction="http://www.google.com")
+    st.session_state["url"]=url
+    st.session_state["documents"]=documents
+    st.session_state["generated"]=["I'm ready, How may I help you?"]
 
 
 ## Conditional display of AI generated responses as a function of user provided prompts
@@ -64,7 +72,7 @@ with response_container:
     if user_input:
         with st.spinner("Generating response..."):
             response = run_g_llm(
-                st.session_state["documents"], query=user_input, chat_history=st.session_state["chat_history"]
+                st.session_state["documents"], st.session_state["url"], query=user_input, chat_history=st.session_state["chat_history"]
             )
             st.session_state.past.append(user_input)
             st.session_state.generated.append(response["answer"])
