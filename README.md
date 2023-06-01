@@ -14,7 +14,11 @@ Chat with your uploaded document project
 **Server Side:** LangChain  🦜🔗
 
 
-**Vectorstore:** Pinecone 🌲
+**Vectorstore:** FAISS  🦜🔗
+
+**Embeddings:** GCP VertexAI  
+
+**Runtime:** Cloud Run   🌲
 
 **Embeddings:** GCP VertexAI  
 
