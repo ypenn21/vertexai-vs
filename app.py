@@ -42,7 +42,7 @@ with st.sidebar:
     #         os.environ["PALM_2_API_KEY"]
 
 if "generated" not in st.session_state:
-    st.session_state["generated"] = ["I'm CodePen, How may I help you?"]
+    st.session_state["generated"] = ["I'm ready, How may I help you?"]
 if "past" not in st.session_state:
     st.session_state["past"] = ["Hi!"]
 if "chat_history" not in st.session_state:
