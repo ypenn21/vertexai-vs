@@ -11,8 +11,8 @@ from langchain.vectorstores import FAISS
 
 def run_g_llm(documents:str, query: str, chat_history: List[Dict[str, Any]] = []):
     embeddings = VertexAIEmbeddings()  # Dimention 768
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1500, chunk_overlap=50)
-    texts=text_splitter.create_documents([documents])
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=200, chunk_overlap=20)
+    texts=text_splitter.split_text(documents)
     #texts = text_splitter.split_documents(documents)
     vectorstore = FAISS.from_documents(texts, embeddings)
     chat = ChatGooglePalm(
