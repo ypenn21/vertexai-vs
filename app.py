@@ -18,13 +18,13 @@ def get_text(instruction: str = "You: "):
     return input_text
 
 
-st.set_page_config(page_title="Codepen - An LLM-powered Repository SideKick")
+st.set_page_config(page_title="Talk2File - An LLM-powered File Search")
 with st.sidebar:
-    st.title("🤗💬 Code-Pen")
+    st.title("🤗💬 Talk2File")
     st.markdown(
         """
     ## About
-    This app is an LLM-powered chatbot built using:
+    This Talk to File app is an LLM-powered chatbot built using:
     - [LangChain 🦜🔗](https://python.langchain.com/en/latest/index.html)
     - [Pinecone 🌲 Vectorestore](https://www.pinecone.io/)
     - [Palm2 LLM Model](https://ai.google/discover/palm2)   
