@@ -1,0 +1,7 @@
+langchain = "*"
+streamlit = "*"
+streamlit-chat = "*"
+streamlit-extras = "*"
+faiss-cpu="*"
+tiktoken = "*"
+google-cloud-aiplatform = "*"
