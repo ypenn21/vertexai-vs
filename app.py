@@ -8,7 +8,7 @@ import os
 
 def get_documents():
    if "documents" not in st.session_state:
-      uploaded_file = st.file_uploader("Upload your text file here...")
+      uploaded_file = st.file_uploader("Upload your file here...")
       if uploaded_file is not None:
         documents=uploaded_file.getvalue().decode('utf-8')
         st.session_state["documents"]=documents
@@ -20,7 +20,7 @@ def get_text(instruction: str = "You: "):
 
 st.set_page_config(page_title="Talk2File - An LLM-powered File Search")
 with st.sidebar:
-    st.title("🤗💬 AMA(LLM)")
+    st.title("🤗💬 Talk2File")
     st.markdown(
         """
     ## About
@@ -56,11 +56,7 @@ response_container = st.container()
 
 with input_container:
     documents=get_documents()
-   # url=get_url(instruction="URL to ask:")
-    user_input = get_text(instruction="Your Question: ")
-    ## st.session_state["url"]=url
-    st.session_state["documents"]=documents
-    st.session_state["generated"]=["I'm ready, How may I help you?"]
+    user_input = get_text(instruction="Ask: ")
 
 
 ## Conditional display of AI generated responses as a function of user provided prompts

@@ -9,7 +9,7 @@ from langchain.chains import ConversationalRetrievalChain
 from langchain.vectorstores import FAISS
 
 
-def run_g_llm(documents:str, url:str, query: str, chat_history: List[Dict[str, Any]] = []):
+def run_g_llm(documents:str, query: str, chat_history: List[Dict[str, Any]] = []):
     embeddings = VertexAIEmbeddings()  # Dimention 768
     text_splitter = RecursiveCharacterTextSplitter()
     texts=text_splitter.split_text(documents)
