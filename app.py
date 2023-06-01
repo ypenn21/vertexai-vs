@@ -17,10 +17,6 @@ def get_text(instruction: str = "You: "):
     input_text = st.text_input(instruction, "", key=f"input-{instruction}")
     return input_text
 
-def get_url(instruction: str = "http://www.google.com"):
-    input_url = st.text_input(instruction, "", key=f"input-{instruction}")
-    return input_url
-
 
 st.set_page_config(page_title="Talk2File - An LLM-powered File Search")
 with st.sidebar:
