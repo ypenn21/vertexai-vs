@@ -72,7 +72,7 @@ with response_container:
     if user_input:
         with st.spinner("Generating response..."):
             response = run_g_llm(
-                st.session_state["documents"], st.session_state["url"], query=user_input, chat_history=st.session_state["chat_history"]
+                st.session_state["documents"], query=user_input, chat_history=st.session_state["chat_history"]
             )
             st.session_state.past.append(user_input)
             st.session_state.generated.append(response["answer"])
