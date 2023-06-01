@@ -1,7 +1,7 @@
 
-# Generative AI Github Assistant for Your Repository
+# Generative AI Ask My Own Lib
 
-Chat with your uploaded document project
+Chat with your your resources
 
 ![Alt Text](https://github.com/g-emarco/github-assistant/blob/main/static/demo21.gif)
 
@@ -20,9 +20,6 @@ Chat with your uploaded document project
 
 **Runtime:** Cloud Run   🌲
 
-**Embeddings:** GCP VertexAI  
-
-**Runtime:** Cloud Run  
 
 ## Environment Variables
 
