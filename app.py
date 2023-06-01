@@ -26,7 +26,7 @@ with st.sidebar:
     ## About
     This Talk to File app is an LLM-powered chatbot built using:
     - [LangChain 🦜🔗](https://python.langchain.com/en/latest/index.html)
-    - [Pinecone 🌲 Vectorestore](https://www.pinecone.io/)
+    - [Vector store FAISS](https://github.com/google-research/faiss)
     - [Palm2 LLM Model](https://ai.google/discover/palm2)   
     - [Streamlit](https://streamlit.io/)
 

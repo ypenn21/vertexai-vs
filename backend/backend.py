@@ -24,3 +24,4 @@ def run_g_llm(documents:str, query: str, chat_history: List[Dict[str, Any]] = []
         llm=chat, retriever=vectorstore.as_retriever(), return_source_documents=True
     )
     return qa({"question": query, "chat_history": chat_history})
+
