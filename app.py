@@ -65,7 +65,7 @@ response_container = st.container()
 
 with input_container:
     choice = st.radio("Select load file: ", ('upload', 'url'))
-    if (status == 'upload'):
+    if (choice == 'upload'):
       get_documents()
     else:
       get_url()
