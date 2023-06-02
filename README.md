@@ -79,27 +79,27 @@ gcloud services enable vertexai.googleapis.com
 
 2. Create a service account `vertex-ai-consumer` with the following roles:
 
-
+export PROJECT_ID=$(gcloud config get-value project)
 
 
 ```bash
 gcloud iam service-accounts create vertex-ai-consumer \
     --display-name="Vertex AI Consumer"
 
-gcloud projects add-iam-policy-binding PROJECT_ID \
-    --member="serviceAccount:vertex-ai-consumer@PROJECT_ID.iam.gserviceaccount.com" \
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+    --member="serviceAccount:vertex-ai-consumer@$PROJECT_ID.iam.gserviceaccount.com" \
     --role="roles/run.invoker"
 
-gcloud projects add-iam-policy-binding PROJECT_ID \
-    --member="serviceAccount:vertex-ai-consumer@PROJECT_ID.iam.gserviceaccount.com" \
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+    --member="serviceAccount:vertex-ai-consumer@$PROJECT_ID.iam.gserviceaccount.com" \
     --role="roles/serviceusage.serviceUsageConsumer"
 
-gcloud projects add-iam-policy-binding PROJECT_ID \
-    --member="serviceAccount:vertex-ai-consumer@PROJECT_ID.iam.gserviceaccount.com" \
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+    --member="serviceAccount:vertex-ai-consumer@$PROJECT_ID.iam.gserviceaccount.com" \
     --role="roles/ml.admin"
 
-gcloud projects add-iam-policy-binding PROJECT_ID \
-    --member="serviceAccount:vertex-ai-consumer@PROJECT_ID.iam.gserviceaccount.com" \
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+    --member="serviceAccount:vertex-ai-consumer@$PROJECT_ID.iam.gserviceaccount.com" \
     --role="roles/vertexai.admin"
 
 ```
@@ -123,11 +123,14 @@ docker push us-east1-docker.pkg.dev/$PROJECT_ID/app/vertex-vs:latest
 ```
 
 6. Deploy to cloud run
-```gcloud run deploy $PROJECT_ID \
-    --image=us-east1-docker.pkg.dev/PROJECT_ID/app/vertex-vs:latest \
+```
+  export GOOGLE_API_KEY="XXXXXXX"
+
+  gcloud run deploy $PROJECT_ID \
+    --image=us-east1-docker.pkg.dev/$PROJECT_ID/app/vertex-vs:latest \
     --region=us-east1 \
     --service-account=vertex-ai-consumer@$PROJECT_ID.iam.gserviceaccount.com \
     --allow-unauthenticated \
-    --set-env-vars="STREAMLIT_SERVER_PORT=8080,PINECONE" 
+    --set-env-vars="STREAMLIT_SERVER_PORT=8080,GOOGLE_API_KEY=$GOOGLE_API_KEY" 
    
 ```
