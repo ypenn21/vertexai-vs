@@ -7,8 +7,7 @@ from langchain.embeddings import VertexAIEmbeddings
 
 from langchain.chains import ConversationalRetrievalChain
 from langchain.vectorstores import FAISS
-from customembeddings import CustomVertexAIEmbeddings
-
+from backend.customembeddings import CustomVertexAIEmbeddings
 
 def run_g_llm(documents:str, query: str, chat_history: List[Dict[str, Any]] = []):
     #embeddings = VertexAIEmbeddings()  # Dimention 768
