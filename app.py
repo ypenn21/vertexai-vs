@@ -17,7 +17,16 @@ def get_text(instruction: str = "You: "):
     input_text = st.text_input(instruction, "", key=f"input-{instruction}")
     return input_text
 
-
+def get_url():
+   if "url" not in st.session_state:
+      url = st.text_input(
+          "Enter the URL of the file you want to upload",
+          "https://www.google.com/",
+          key="url",
+      )
+     
+   return url
+      
 st.set_page_config(page_title="Talk2File - An LLM-powered File Search")
 with st.sidebar:
     st.title("🤗💬 Talk2File")
@@ -55,9 +64,12 @@ response_container = st.container()
 
 
 with input_container:
-    documents=get_documents()
+    choice = st.radio("Select load file: ", ('upload', 'url'))
+    if (status == 'upload'):
+      get_documents()
+    else:
+      get_url()
     user_input = get_text(instruction="Ask: ")
-
 
 ## Conditional display of AI generated responses as a function of user provided prompts
 with response_container:
