@@ -74,6 +74,7 @@ gcloud services enable run.googleapis.com
 gcloud services enable secretmanager.googleapis.com
 gcloud services enable artifactregistry.googleapis.com
 gcloud services enable vertexai.googleapis.com
+gcloud services enable generativelanguage.googleapis.com
 
 ```
 
