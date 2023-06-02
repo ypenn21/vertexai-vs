@@ -104,15 +104,6 @@ gcloud projects add-iam-policy-binding $PROJECT_ID \
     --role="roles/vertexai.admin"
 
 ```
-
-3. Create the secrets:
-`PINECONE_API_KEY`
-`PINECONE_ENVIRONMENT_REGION`
-`PALM2_API_KEY`
-
-and for each secret grant the SA `vertex-ai-consumer@$PROJECT_ID.iam.gserviceaccount.com` Secret Manager Secret Accessor
-role to th secrets
-
 4. Build Image
 ```bash
 docker build . -t us-east1-docker.pkg.dev/$PROJECT_ID/app/vertex-vs:latest
@@ -120,18 +111,18 @@ docker build . -t us-east1-docker.pkg.dev/$PROJECT_ID/app/vertex-vs:latest
 
 5. Push to Artifact Registry
 ```bash
+gcloud auth configure-docker us-east1-docker.pkg.dev
 docker push us-east1-docker.pkg.dev/$PROJECT_ID/app/vertex-vs:latest
 ```
 
 6. Deploy to cloud run
 ```
-  export GOOGLE_API_KEY="XXXXXXX"
 
   gcloud run deploy $PROJECT_ID \
     --image=us-east1-docker.pkg.dev/$PROJECT_ID/app/vertex-vs:latest \
     --region=us-east1 \
     --service-account=vertex-ai-consumer@$PROJECT_ID.iam.gserviceaccount.com \
     --allow-unauthenticated \
-    --set-env-vars="STREAMLIT_SERVER_PORT=8080,GOOGLE_API_KEY=$GOOGLE_API_KEY" 
+    --set-env-vars="STREAMLIT_SERVER_PORT=8080" 
    
 ```

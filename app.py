@@ -64,10 +64,12 @@ response_container = st.container()
 
 
 with input_container:
-    choice = st.radio("Select load file: ", ('upload', 'url'))
+    choice = st.radio("Select your choice: ", ('upload', 'url'))
     if (choice == 'upload'):
+      st.session_state["url"] = []
       get_documents()
     else:
+      st.session_state["documents"] = []
       get_url()
     user_input = get_text(instruction="Ask: ")
 
