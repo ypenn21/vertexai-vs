@@ -5,4 +5,4 @@ streamlit-extras
 faiss-cpu
 tiktoken
 google-cloud-aiplatform
-google-ai-generativelanguage
+google-generativeai

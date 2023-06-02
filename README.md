@@ -114,7 +114,7 @@ role to th secrets
 
 4. Build Image
 ```bash
-docker build . -t us-east1-docker.pkg.dev/$PROJECT_ID/app/vertext-vs:latest
+docker build . -t us-east1-docker.pkg.dev/$PROJECT_ID/app/vertex-vs:latest
 ```
 
 5. Push to Artifact Registry
