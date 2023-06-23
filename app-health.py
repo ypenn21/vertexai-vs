@@ -1,53 +1,43 @@
 
 import streamlit as st
+from backend.health_llm import predict_llm_health, predict_health
+# Title: Personal Health Profile
+st.title("Personal Health Profile")
 
-# Title, Health Survey and consultant
-st.title("Health Survey")
-st.write("Consultant: Dr. Smith")
-
-# Prompt for input survey
-st.write("Please enter your information below:")
-
-# Age Textbox
+# Prompt for enter profile information
 age = st.number_input("Age")
+gender = st.selectbox("Gender", ["male", "female"])
+height = st.number_input("Height (cm)")
+weight = st.number_input("Weight (kg)")
+smoking = st.selectbox("Smoking", ["yes", "no"])
+drinking = st.selectbox("Drinking", ["yes", "no"])
+education = st.selectbox("Education", ["high school", "college", "graduate school"])
+smoking = st.selectbox("Smoking", ["yes", "no"])
+alcohol = st.selectbox("Alcohol", ["yes", "no"])
+glucose = st.number_input("Glucose (mg/dL)")
+blood_pressure_h = st.number_input("Blood Pressure (H)")
+blood_pressure_l = st.number_input("Blood Pressure (L)")
 
-# Gender Textbox
-gender = st.selectbox("Gender", ["Male", "Female"])
+# Predict health
+bmi=weight/(height**2)
+bmi=round(bmi, 2)
 
-# Height Textbox
-height = st.number_input("Height (in inches)")
+diabetest_endpoint=2830191308407046144
+diabetes_instance={
+ gender: 0.0,
+ age: 0.0,
+ bmi: 0.0,
+ blood_pressure_h: 0.0,
+ blood_pressure_l: 0.0,
+ drinking: 0.0,
+ height: 0.0,
+ weight: 0.0,
+ smoking: 0.0,
+}
+heart_disease_endpoint=2863405355658903552	
+heart_disease_instance={
+  	
+}
 
-# Weight Textbox
-weight = st.number_input("Weight (in pounds)")
 
-# Smoking Textbox
-smoking = st.selectbox("Smoking", ["Yes", "No"])
-
-# Drinking Textbox
-drinking = st.selectbox("Drinking", ["Yes", "No"])
-
-# Education Textbox
-education = st.selectbox("Education", ["High School", "College", "Graduate School"])
-
-# Display the results
-st.write("Your results:")
-st.write("Age:", age)
-st.write("Gender:", gender)
-st.write("Height:", height)
-st.write("Weight:", weight)
-st.write("Smoking:", smoking)
-st.write("Drinking:", drinking)
-st.write("Education:", education)
-#write streamlit page with following features:
-#1. Title, Health Survey and consultant
-#2. Prompt for input survey
-#2.1 Age Textbox
-#2.2 Gender Textbox
-#2.3 Height Textbox
-#2.4 Weight Textbox
-#2.5 Smoking Textbox
-#2.6 Drinking Textbox
-#2.7 Education Textbox
-#2.8 Smoking Textbox
-#2.9 Drinking Textbox
-#2.10 Education Textbox
+health = predict_health(age, gender, height, weight, smoking, drinking, education, smoking, alcohol, glucose, blood_pressure

@@ -1,15 +1,31 @@
 import vertexai
 from vertexai.preview.language_models import ChatModel, InputOutputTextPair
+from typing import Dict
 
-vertexai.init(project="rick-vertex-ai", location="us-central1")
-chat_model = ChatModel.from_pretrained("chat-bison@001")
-parameters = {
-    "temperature": 0.2,
-    "max_output_tokens": 256,
-    "top_p": 0.8,
-    "top_k": 40
-}
-chat = chat_model.start_chat(
+from google.cloud import aiplatform
+from google.protobuf import json_format
+from google.protobuf.struct_pb2 import Value
+
+def predict_llm_health(
+    project_id: str,
+    model_name: str,
+    temperature: float,
+    max_decode_steps: int,
+    top_p: float,
+    top_k: int,
+    content: str,
+    location: str = "us-central1",
+    tuned_model_name: str = "",
+    ) :
+    vertexai.init(project="rick-vertex-ai", location="us-central1")
+    chat_model = ChatModel.from_pretrained("chat-bison@001")
+    parameters = {
+         "temperature": 0.2,
+         "max_output_tokens": 256,
+         "top_p": 0.8,
+         "top_k": 40
+    }
+    chat = chat_model.start_chat(
     context="""You are most recognized personal medical expert specialized in heart and diabetes areas. You provide answers and advices based on following background information provided:
 
 Age: 50
@@ -33,7 +49,41 @@ https://www.cdc.gov/heartdisease/index.htm
 Only answer personal health related questions, for other question, with following answer:
 I am health assistant, I can not answer your question out of my domain knowledge""",
 )
-response = chat.send_message("""hi""", **parameters)
-print(f"Response from Model: {response.text}")
-response = chat.send_message("""Hi""", **parameters)
-print(f"Response from Model: {response.text}")
+    response = chat.send_message("""hi""", **parameters)
+    print(f"Response from Model: {response.text}")
+    response = chat.send_message("""Hi""", **parameters)
+    print(f"Response from Model: {response.text}")
+
+
+
+def predict_health(
+    project: str,
+    endpoint_id: str,
+    instance_dict: Dict,
+    location: str = "us-central1",
+    api_endpoint: str = "us-central1-aiplatform.googleapis.com",
+):
+    # The AI Platform services require regional API endpoints.
+    client_options = {"api_endpoint": api_endpoint}
+    # Initialize client that will be used to create and send requests.
+    # This client only needs to be created once, and can be reused for multiple requests.
+    client = aiplatform.gapic.PredictionServiceClient(client_options=client_options)
+    # for more info on the instance schema, please use get_model_sample.py
+    # and look at the yaml found in instance_schema_uri
+    instance = json_format.ParseDict(instance_dict, Value())
+    instances = [instance]
+    parameters_dict = {}
+    parameters = json_format.ParseDict(parameters_dict, Value())
+    endpoint = client.endpoint_path(
+        project=project, location=location, endpoint=endpoint_id
+    )
+    response = client.predict(
+        endpoint=endpoint, instances=instances, parameters=parameters
+    )
+    print("response")
+    print(" deployed_model_id:", response.deployed_model_id)
+    # See gs://google-cloud-aiplatform/schema/predict/prediction/tabular_classification_1.0.0.yaml for the format of the predictions.
+    predictions = response.predictions
+    return predictions
+    #for prediction in predictions:
+    #    print(" prediction:", dict(prediction))
