@@ -28,7 +28,7 @@ def request_diabetes(age, gender, height, weight, drinking, smoking, alcohol, gl
 st.set_page_config(layout="wide")
 st.title("Personal Health Profile")
 # Create a form
-with st.form("Health Profile Form")
+with st.form("Health Profile Form"):
 
 # Prompt for enter profile information
   age = st.number_input("Age")
