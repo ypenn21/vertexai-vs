@@ -3,6 +3,7 @@ import streamlit as st
 # Title: Personal Health Profile
 import os
 from backend.heath_llm import predict_health
+from typing import Dict
 
 def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressure_h, blood_pressure_l):
   bmi=weight/(height/100**2)
@@ -20,8 +21,31 @@ def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressu
    "hypertension": str(hypertension),
    "heart_disease": "0"
   }
-  health_response = predict_health(project= "rick-vertex-ai", endpoint_id=diabetes_endpoint, instance_dict=diabetes_instance)
-  st.write(health_response)
+  predictions = predict_health(project= "rick-vertex-ai", endpoint_id=diabetes_endpoint, instance_dict=diabetes_instance)
+  for prediction in predictions:
+    st.write(" prediction:", dict(prediction))
+
+def request_heart_disease(age, gender, height, weight, smoking, glucose, blood_pressure_h, blood_pressure_l):
+  bmi=weight/(height/100**2)
+  bmi=round(bmi,2)
+  hypertension=0
+  if(blood_pressure_h>130):
+    hypertension=1
+  heart_endpoint="2863405355658903552"
+  heart_instance={
+   "gender" : gender,
+   "age" : str(age),
+   "smoking_history" : smoking,
+   "bmi": str(bmi),
+   "blood_glucose_level": str(glucose),
+   "hypertension": str(hypertension),
+   "heart_disease": "0"
+  }
+  predictions = predict_health(project= "rick-vertex-ai", endpoint_id=heart_endpoint, instance_dict=heart_instance)
+  for prediction in predictions:
+    st.write(" prediction:", dict(prediction))
+
+
 
 st.set_page_config(layout="wide")
 st.title("Personal Health Profile")
