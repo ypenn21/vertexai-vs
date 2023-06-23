@@ -14,6 +14,7 @@ def predict_llm_health(
     top_p: float,
     top_k: int,
     content: str,
+    health_instance,
     location: str = "us-central1",
     tuned_model_name: str = "",
     ) :
@@ -49,12 +50,11 @@ https://www.cdc.gov/heartdisease/index.htm
 Only answer personal health related questions, for other question, with following answer:
 I am health assistant, I can not answer your question out of my domain knowledge""",
 )
-    response = chat.send_message("""hi""", **parameters)
-    print(f"Response from Model: {response.text}")
-    response = chat.send_message("""Hi""", **parameters)
-    print(f"Response from Model: {response.text}")
-
-
+    response = chat.send_message(content=content, parameters=parameters)
+    print("response")
+    print(" deployed_model_id:", response.deployed_model_id)
+    # See gs://google-cloud-aiplatform/schema/predict/prediction/tabular_classification
+    return response
 
 def predict_health(
     project: str,

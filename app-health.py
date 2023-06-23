@@ -2,7 +2,7 @@
 import streamlit as st
 # Title: Personal Health Profile
 import os
-from backend.heath_llm import predict_health
+from backend.heath_llm import predict_health, predict_llm_health
 from typing import Dict
 
 def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressure_h, blood_pressure_l):
@@ -18,12 +18,33 @@ def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressu
    "smoking_history" : smoking,
    "bmi": str(bmi),
    "blood_glucose_level": str(glucose),
-   "hypertension": str(hypertension),
-   "heart_disease": "0"
+   "blood_pressure_h": blood_pressure_h,
+   "blood_pressure_l": blood_pressure_l,
+   "glucose": glucose,
+
   }
   predictions = predict_health(project= "rick-vertex-ai", endpoint_id=diabetes_endpoint, instance_dict=diabetes_instance)
   for prediction in predictions:
     st.write(" prediction:", dict(prediction))
+  question=st.text_input("Ask question:")
+  ask_submitted = st.form_submit_button("Go")
+  if(ask_submitted):
+     health_instance={
+       "gender" : gender,
+       "age" : age,
+       "height" : height,
+       "weight" : weight,
+       "smoking_history" : smoking,
+       "blood_glucose_level": str(glucose),
+       "blood_pressure_h": blood_pressure_h,
+       "blood_pressure_l": blood_pressure_l,
+       "hypertension": str(hypertension),
+       "heart_disease": "0"
+        
+     }
+     response = predict_llm_health(project_id= "rick-vertex-ai", content=question, health_dict=health_instance)
+    
+     st.write(f"Response from Model: {response.text}")
 
 def request_heart_disease(age, gender, height, weight, smoking, glucose, blood_pressure_h, blood_pressure_l):
   bmi=weight/(height/100**2)
