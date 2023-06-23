@@ -1,8 +1,10 @@
 
 import streamlit as st
-from backend.health_llm import predict_llm_health, predict_health
 # Title: Personal Health Profile
 import os
+from backend.heath_llm import predict_health
+
+st.set_page_config(layout="wide")
 st.title("Personal Health Profile")
 
 # Prompt for enter profile information
