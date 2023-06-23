@@ -2,6 +2,7 @@
 import streamlit as st
 from backend.health_llm import predict_llm_health, predict_health
 # Title: Personal Health Profile
+import os
 st.title("Personal Health Profile")
 
 # Prompt for enter profile information
