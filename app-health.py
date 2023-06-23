@@ -5,7 +5,7 @@ import os
 from backend.heath_llm import predict_health, predict_llm_health
 from typing import Dict
 
-def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressure_h, blood_pressure_l):
+def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressure_h, blood_pressure_l, heart_disease):
   bmi=weight/(height/100**2)
   bmi=round(bmi,2)
   hypertension=0
@@ -18,10 +18,8 @@ def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressu
    "smoking_history" : smoking,
    "bmi": str(bmi),
    "blood_glucose_level": str(glucose),
-   "blood_pressure_h": blood_pressure_h,
-   "blood_pressure_l": blood_pressure_l,
-   "glucose": glucose,
-
+   "hypertension": str(hypertension),
+   "heart_disease": str(heart_disease)
   }
   predictions = predict_health(project= "rick-vertex-ai", endpoint_id=diabetes_endpoint, instance_dict=diabetes_instance)
   for prediction in predictions:
@@ -38,8 +36,7 @@ def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressu
        "blood_glucose_level": str(glucose),
        "blood_pressure_h": blood_pressure_h,
        "blood_pressure_l": blood_pressure_l,
-       "hypertension": str(hypertension),
-       "heart_disease": "0"
+       "heart_disease": heart_disease
         
      }
      response = predict_llm_health(project_id= "rick-vertex-ai", content=question, health_dict=health_instance)
@@ -83,6 +80,10 @@ with st.form("Health Profile Form"):
   drinking_option = st.selectbox("Drinking", yes_no_options)
   drinking=yes_no_options.index(drinking_option)
   smoking = st.selectbox("Smoking", ["former","No info","never","current","ever","not current"])
+  
+  heart_disease_option = st.selectbox("Heart Disease", yes_no_options)
+  heart_disease=yes_no_options.index(heart_disease_option)
+
   alcohol_option = st.selectbox("Alcohol", yes_no_options)
   alcohol=yes_no_options.index(alcohol_option)  
   glucose = st.number_input("Glucose (mg/dL)")
@@ -90,6 +91,6 @@ with st.form("Health Profile Form"):
   blood_pressure_l = st.number_input("Blood Pressure (L)")
   submitted = st.form_submit_button("Save")
   if submitted:
-       request_diabetes(age, gender, height, weight, smoking,  glucose, blood_pressure_h, blood_pressure_l)
+       request_diabetes(age, gender, height, weight, smoking,  glucose, blood_pressure_h, blood_pressure_l, heart_disease)
 
 
