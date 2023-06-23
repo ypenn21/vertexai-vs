@@ -21,23 +21,21 @@ blood_pressure_l = st.number_input("Blood Pressure (L)")
 # Predict health
 bmi=weight/(height**2)
 bmi=round(bmi, 2)
+if(blood_pressure_h<=130 ):
+	hypertension=0
+else:
+	hypertension=0
+
 
 diabetest_endpoint=2830191308407046144
 diabetes_instance={
- gender: 0.0,
- age: 0.0,
- bmi: 0.0,
- blood_pressure_h: 0.0,
- blood_pressure_l: 0.0,
- drinking: 0.0,
- height: 0.0,
- weight: 0.0,
- smoking: 0.0,
+ "gender" : gender,
+ "age" : age,
+ "smoking" : smoking,
+ "bmi": bmi,
+ "blood_glucose_level": glucose,
+ "hypertension": hypertension,
+ "heart_disease": 0
 }
-heart_disease_endpoint=2863405355658903552	
-heart_disease_instance={
-  	
-}
+health = predict_health(project: "rick-vertex-ai", endpoint: diabetes_endpoint, instance: diabetes_instance)
 
-
-health = predict_health(age, gender, height, weight, smoking, drinking, education, smoking, alcohol, glucose, blood_pressure
