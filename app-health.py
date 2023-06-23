@@ -25,7 +25,7 @@ def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressu
   for prediction in predictions:
     st.write(" prediction:", dict(prediction))
   question=st.text_input("Ask question:")
-  if(st.button("Ask")):
+  if(question):
      health_instance={
        "gender" : gender,
        "age" : age,
