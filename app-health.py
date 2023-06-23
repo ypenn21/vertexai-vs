@@ -4,8 +4,8 @@ import streamlit as st
 import os
 from backend.heath_llm import predict_health
 
-def request_diabetes(age, gender, height, weight, drinking, smoking, alcohol, glucose, blood_pressure_h, blood_pressure_l):
-  bmi=weight/(height**2)
+def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressure_h, blood_pressure_l):
+  bmi=weight/(height/100**2)
   bmi=round(bmi,2)
   hypertension=0
   if(blood_pressure_h>130):
@@ -14,7 +14,7 @@ def request_diabetes(age, gender, height, weight, drinking, smoking, alcohol, gl
   diabetes_instance={
    "gender" : gender,
    "age" : str(age),
-   "smoking" : str(smoking),
+   "smoking_history" : smoking,
    "bmi": str(bmi),
    "blood_glucose_level": str(glucose),
    "hypertension": str(hypertension),
@@ -37,8 +37,7 @@ with st.form("Health Profile Form"):
   weight = st.number_input("Weight (kg)")
   drinking_option = st.selectbox("Drinking", yes_no_options)
   drinking=yes_no_options.index(drinking_option)
-  smoking_option = st.selectbox("Smoking", yes_no_options)
-  smoking=yes_no_options.index(smoking_option)
+  smoking = st.selectbox("Smoking", ["former","No info","never","current","ever","not current"])
   alcohol_option = st.selectbox("Alcohol", yes_no_options)
   alcohol=yes_no_options.index(alcohol_option)  
   glucose = st.number_input("Glucose (mg/dL)")
@@ -46,6 +45,6 @@ with st.form("Health Profile Form"):
   blood_pressure_l = st.number_input("Blood Pressure (L)")
   submitted = st.form_submit_button("Save")
   if submitted:
-       request_diabetes(age, gender, height, weight, drinking, smoking, alcohol, glucose, blood_pressure_h, blood_pressure_l)
+       request_diabetes(age, gender, height, weight, smoking,  glucose, blood_pressure_h, blood_pressure_l)
 
 
