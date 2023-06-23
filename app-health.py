@@ -27,7 +27,8 @@ else:
 	hypertension=0
 
 
-diabetest_endpoint=2830191308407046144
+diabetes_endpoint="2830191308407046144"
+
 diabetes_instance={
  "gender" : gender,
  "age" : age,
@@ -37,5 +38,6 @@ diabetes_instance={
  "hypertension": hypertension,
  "heart_disease": 0
 }
-health = predict_health(project: "rick-vertex-ai", endpoint: diabetes_endpoint, instance: diabetes_instance)
+health_response = predict_health(project= "rick-vertex-ai", endpoint=diabetes_endpoint, instance=diabetes_instance)
+st.write(health_response)
 
