@@ -9,7 +9,7 @@ from google.cloud import discoveryengine
 # serving_config_id = "default_config"          # Values: "default_config"
 # search_query = "YOUR_SEARCH_QUERY"
 
-
+#rename this function to search_test
 def search_sample(
     project_id: str,
     location: str,
