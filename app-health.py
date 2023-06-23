@@ -20,7 +20,7 @@ def request_diabetes(age, gender, height, weight, drinking, smoking, alcohol, gl
    "hypertension": hypertension,
    "heart_disease": 0
   }
-  health_response = predict_health(project= "rick-vertex-ai", endpoint_id=diabetes_endpoint, instance=diabetes_instance)
+  health_response = predict_health(project= "rick-vertex-ai", endpoint_id=diabetes_endpoint, instance_dict=diabetes_instance)
   st.write(health_response)
 
 st.set_page_config(layout="wide")
