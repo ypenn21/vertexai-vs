@@ -20,10 +20,8 @@ def request_diabetes(age, gender, height, weight, drinking, smoking, alcohol, gl
    "hypertension": hypertension,
    "heart_disease": 0
   }
-  health_response = predict_health(project= "rick-vertex-ai", endpoint=diabetes_endpoint, instance=diabetes_instance)
+  health_response = predict_health(project= "rick-vertex-ai", endpoint_id=diabetes_endpoint, instance=diabetes_instance)
   st.write(health_response)
-
-
 
 st.set_page_config(layout="wide")
 st.title("Personal Health Profile")
@@ -31,13 +29,18 @@ st.title("Personal Health Profile")
 with st.form("Health Profile Form"):
 
 # Prompt for enter profile information
+  yes_no_options=["no", "yes"]
+  
   age = st.number_input("Age")
   gender = st.selectbox("Gender", ["male", "female"])
   height = st.number_input("Height (cm)")
   weight = st.number_input("Weight (kg)")
-  drinking = st.selectbox("Drinking", ["yes", "no"])
-  smoking = st.selectbox("Smoking", ["yes", "no"])
-  alcohol = st.selectbox("Alcohol", ["yes", "no"])
+  drinking_option = st.selectbox("Drinking", yes_no_options)
+  drinking=yes_no_options.index(drinking_option)
+  smoking_option = st.selectbox("Smoking", yes_no_options)
+  smoking=yes_no_options.index(smoking_option)
+  alcohol_option = st.selectbox("Alcohol", yes_no_options)
+  alcohol=yes_no_options.index(alcohol_option)  
   glucose = st.number_input("Glucose (mg/dL)")
   blood_pressure_h = st.number_input("Blood Pressure (H)")
   blood_pressure_l = st.number_input("Blood Pressure (L)")
