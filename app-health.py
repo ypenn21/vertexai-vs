@@ -13,12 +13,12 @@ def request_diabetes(age, gender, height, weight, drinking, smoking, alcohol, gl
   diabetes_endpoint="2830191308407046144"
   diabetes_instance={
    "gender" : gender,
-   "age" : age,
-   "smoking" : smoking,
-   "bmi": bmi,
-   "blood_glucose_level": glucose,
-   "hypertension": hypertension,
-   "heart_disease": 0
+   "age" : str(age),
+   "smoking" : str(smoking),
+   "bmi": str(bmi),
+   "blood_glucose_level": str(glucose),
+   "hypertension": str(hypertension),
+   "heart_disease": "0"
   }
   health_response = predict_health(project= "rick-vertex-ai", endpoint_id=diabetes_endpoint, instance_dict=diabetes_instance)
   st.write(health_response)
