@@ -73,9 +73,8 @@ https://www.cdc.gov/heartdisease/index.htm
         blood_pressure_h=health_instance["blood_pressure_h"],
         blood_pressure_l=health_instance["blood_pressure_l"],
         diabetes_risk=health_instance["diabetes_risk"],
-        alchol=health_instance["alchol"],
+        alcohol=health_instance["alcohol"],
         cholesterol=health_instance["cholesterol"],
-        
         prompt=prompt
       ).to_messages()
     )
