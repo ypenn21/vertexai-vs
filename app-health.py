@@ -39,11 +39,13 @@ def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressu
   for prediction in predictions:
     st.write(" prediction:", dict(prediction))
 
-  if 'generated' not in st.session_state:
-    st.session_state['generated'] = ["I'm health assistant, How may I help you?"]
+  if "generated" not in st.session_state:
+    st.session_state["generated"] = ["I'm health assistant, How may I help you?"]
+  if "past" not in st.session_state:
+    st.session_state["past"] = ["Hi!"]
+  if "chat_history" not in st.session_state:
+    st.session_state["chat_history"] = []
 
-  if 'past' not in st.session_state:
-    st.session_state['past'] = ['Hi!']
   input_container = st.container()
   colored_header(label='', description='', color_name='blue-30')
   response_container = st.container()
@@ -65,7 +67,8 @@ def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressu
         }
         response = generate_response(user_input,health_instance)
         st.session_state.past.append(user_input)
-        st.session_state.generated.append(response)
+        st.session_state.generated.append(response.text)
+        st.session_state["chat_history"].append((user_input, response["answer"]))
         
     if st.session_state['generated']:
         for i in range(len(st.session_state['generated'])):
