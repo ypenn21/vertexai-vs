@@ -40,7 +40,7 @@ Smoke: {smoking_history}
 Diabetes Risks(0-1): {diabetes_risk}
 Heart Disease history: {heart_disease}
 Blood Pressure(H/L): {blood_pressure_h}/{blood_pressure_l}
-Alcohol: {alcohol}}
+Alcohol: {alcohol}
 Cholesterol Level: {cholesterol}
 Provide answers based on information available from most recognized resources such as websites:
 https://diabetes.org/diabetes
