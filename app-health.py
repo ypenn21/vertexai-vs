@@ -35,26 +35,7 @@ def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressu
    "hypertension": str(hypertension),
    "heart_disease": str(heart_disease)
   }
-  predictions = predict_health(project= "rick-vertex-ai", endpoint_id=diabetes_endpoint, instance_dict=diabetes_instance)
-  for prediction in predictions:
-    st.write(" prediction:", dict(prediction))
-
-  if "generated" not in st.session_state:
-    st.session_state["generated"] = ["I'm health assistant, How may I help you?"]
-  if "past" not in st.session_state:
-    st.session_state["past"] = ["Hi!"]
-  if "chat_history" not in st.session_state:
-    st.session_state["chat_history"] = []
-
-  input_container = st.container()
-  colored_header(label='', description='', color_name='blue-30')
-  response_container = st.container()
-  ## Applying the user input box
-  with input_container: 
-    user_input = get_text()
-  with response_container:
-    if user_input:
-        health_instance={
+  health_instance={
        "gender" : gender,
        "age" : age,
        "height" : height,
@@ -65,7 +46,27 @@ def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressu
        "blood_pressure_l": blood_pressure_l,
        "heart_disease": heart_disease
         }
-        response = generate_response(user_input,health_instance)
+  predictions = predict_health(project= "rick-vertex-ai", endpoint_id=diabetes_endpoint, instance_dict=diabetes_instance)
+  for prediction in predictions:
+    st.write(" prediction:", dict(prediction))
+
+  if "generated" not in st.session_state:
+    st.session_state["generated"] = ["I'm health assistant, How may I help you?"]
+  if "past" not in st.session_state:
+    st.session_state["past"] = ["Hi!"]
+  if "chat_history" not in st.session_state:
+    st.session_state["chat_history"] = []
+  st.session_state["health_instance"]=health_instance
+  input_container = st.container()
+  colored_header(label='', description='', color_name='blue-30')
+  response_container = st.container()
+  ## Applying the user input box
+  with input_container: 
+    user_input = get_text()
+  with response_container:
+    if user_input:
+       
+        response = generate_response(user_input,st.session_state["health_instance"])
         st.session_state.past.append(user_input)
         st.session_state.generated.append(response.content)
         #st.write(f"Response from Model: {response.text}")
