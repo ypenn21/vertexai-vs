@@ -4,6 +4,20 @@ import streamlit as st
 import os
 from backend.heath_llm import predict_health, predict_llm_health
 from typing import Dict
+from streamlit_chat import message
+from streamlit_extras.colored_header import colored_header
+
+def get_text():
+    input_text = st.text_input("You: ", "", key="input")
+    return input_text
+
+def generate_response(prompt, health_instance):
+    response=predict_llm_health(project_id= "rick-vertex-ai",
+                                content = prompt, health_instance = health_instance
+    )
+    st.session_state['generated'].append(response)
+    
+    return response
 
 def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressure_h, blood_pressure_l, heart_disease):
   bmi=weight/(height/100**2)
@@ -24,9 +38,21 @@ def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressu
   predictions = predict_health(project= "rick-vertex-ai", endpoint_id=diabetes_endpoint, instance_dict=diabetes_instance)
   for prediction in predictions:
     st.write(" prediction:", dict(prediction))
-  question=st.text_input("Ask question:")
-  if(question):
-     health_instance={
+
+  if 'generated' not in st.session_state:
+    st.session_state['generated'] = ["I'm health assistant, How may I help you?"]
+
+  if 'past' not in st.session_state:
+    st.session_state['past'] = ['Hi!']
+  input_container = st.container()
+  colored_header(label='', description='', color_name='blue-30')
+  response_container = st.container()
+  ## Applying the user input box
+  with input_container: 
+    user_input = get_text()
+  with response_container:
+    if user_input:
+        health_instance={
        "gender" : gender,
        "age" : age,
        "height" : height,
@@ -36,11 +62,17 @@ def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressu
        "blood_pressure_h": blood_pressure_h,
        "blood_pressure_l": blood_pressure_l,
        "heart_disease": heart_disease
+        }
+        response = generate_response(user_input,)
+        st.session_state.past.append(user_input)
+        st.session_state.generated.append(response)
         
-     }
-     response = predict_llm_health(project_id= "rick-vertex-ai", content=question, health_dict=health_instance)
-    
-     st.write(f"Response from Model: {response.text}")
+    if st.session_state['generated']:
+        for i in range(len(st.session_state['generated'])):
+            message(st.session_state['past'][i], is_user=True, key=str(i) + '_user')
+            message(st.session_state["generated"][i], key=str(i))
+  
+     #st.write(f"Response from Model: {response.text}")
 
 def request_heart_disease(age, gender, height, weight, smoking, glucose, blood_pressure_h, blood_pressure_l):
   bmi=weight/(height/100**2)
@@ -78,7 +110,7 @@ with st.form("Health Profile Form"):
   weight = st.number_input("Weight (kg)")
   drinking_option = st.selectbox("Drinking", yes_no_options)
   drinking=yes_no_options.index(drinking_option)
-  smoking = st.selectbox("Smoking", ["former","No info","never","current","ever","not current"])
+  smoking = st.selectbox("Smoking", ["never","former","No info","current","ever","not current"])
   
   heart_disease_option = st.selectbox("Heart Disease", yes_no_options)
   heart_disease=yes_no_options.index(heart_disease_option)
