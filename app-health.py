@@ -60,7 +60,7 @@ def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressu
        "height" : height,
        "weight" : weight,
        "smoking_history" : smoking,
-       "blood_glucose_level": str(glucose),
+       "blood_glucose_level": glucose,
        "blood_pressure_h": blood_pressure_h,
        "blood_pressure_l": blood_pressure_l,
        "heart_disease": heart_disease

@@ -30,20 +30,16 @@ def predict_llm_health(
          "top_k": 40
     }
     #chat = chat_model.start_chat(
-    context="""You are most recognized personal medical expert specialized in heart and diabetes areas. You provide answers and advices based on following background information provided:
-
-Age: 50
-Gender: Male 
-Weight:  150lb
-Height: 170cm
-Fasting Glucose Level: 70
-Smoke: No
-Cholesterol: 210
-Alcohol: No
+    template=("""You are most recognized personal medical expert specialized in heart and diabetes areas. You provide answers and advices based on following background information provided:
+Age: {age}
+Gender: {gender} 
+Weight:  {weight}kg
+Height: {height}cm
+Fasting Glucose Level: {blood_glucose_level} mg/dL
+Smoke: {smoking_history}
 Diabetes Risks(0-1): 0.7, confidence level(0-1): 0.99
-Heart Disease Risks(0-1): 0.2, confidence level(0-1): 0.99
-Blood Pressure(H/L): 140/80
-Address: 11101
+Heart Disease history: {heart_disease}
+Blood Pressure(H/L): {blood_pressure_h}/{blood_pressure_l}
 
 Provide answers based on information available from most recognized resources such as websites:
 https://diabetes.org/diabetes
@@ -51,20 +47,34 @@ https://www.heart.org/
 https://www.cdc.gov/heartdisease/index.htm
 
 Only answer personal health related questions, for other question, with following answer:
-I am health assistant, I can not answer your question out of my domain knowledge""",
-    messages = [
-    SystemMessage(
-        content=context
-    ),
-    HumanMessage(
-        content=prompt
-    ),
-    ]
+I am health assistant, I can not answer your question out of my domain knowledge"""
+    )   
+    #template = (
+    #"You are a helpful assistant that translates {input_language} to {output_language}."
+    #)
+    system_message_prompt = SystemMessagePromptTemplate.from_template(template)
+    human_template = "{prompt}"
+    human_message_prompt = HumanMessagePromptTemplate.from_template(human_template)
 
-    response =  chat_model(messages)
-    #print("response")
-    #print(" deployed_model_id:", response.deployed_model_id)
-    # See gs://google-cloud-aiplatform/schema/predict/prediction/tabular_classification
+    chat_prompt = ChatPromptTemplate.from_messages(
+       [system_message_prompt, human_message_prompt]
+    )
+
+# get a chat completion from the formatted messages
+    response=chat_model(
+      chat_prompt.format_prompt(
+        age=health_instance.age,
+        gender=health_instance.gender,
+        weight=health_instance.weight,
+        height=health_instance.height,
+        blood_glucose_level=health_instance.blood_glucose_level,
+        smoking_history=health_instance.smoking_history,
+        heart_disease=health_instance.heart_disease,
+        blood_pressure_h=health_instance.blood_pressure_h,
+        blood_pressure_l=health_instance.blood_pressure_l 
+      ).to_messages()
+    )
+   
     return response
 
 def predict_health(
