@@ -46,8 +46,7 @@ https://diabetes.org/diabetes
 https://www.heart.org/
 https://www.cdc.gov/heartdisease/index.htm
 
-Only answer personal health related questions, for other question, with following answer:
-I am health assistant, I can not answer your question out of my domain knowledge"""
+"""
     )   
     #template = (
     #"You are a helpful assistant that translates {input_language} to {output_language}."

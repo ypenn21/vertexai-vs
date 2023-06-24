@@ -74,7 +74,7 @@ def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressu
         
     if st.session_state['generated']:
         for i in range(len(st.session_state['generated'])):
-            message(st.session_state['past'][i], is_user=True, key=str(i) + '_user')
+            #message(st.session_state['past'][i], is_user=True, key=str(i) + '_user')
             message(st.session_state["generated"][i], key=str(i))
   
      #st.write(f"Response from Model: {response.text}")
