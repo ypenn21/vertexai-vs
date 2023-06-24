@@ -1,6 +1,8 @@
 import vertexai
 from vertexai.preview.language_models import ChatModel, InputOutputTextPair
 from typing import Dict
+from langchain.llms import VertexAI
+from langchain.chat_models import ChatVertexAI
 
 from google.cloud import aiplatform
 from google.protobuf import json_format
@@ -12,6 +14,17 @@ def predict_llm_health(
     health_instance
     ) :
     vertexai.init(project="rick-vertex-ai", location="us-central1")
+    
+    llm = VertexAI(
+    model_name='text-bison@001',
+    max_output_tokens=256,
+    temperature=0.1,
+    top_p=0.8,
+    top_k=40,
+    verbose=True,
+     ) 
+
+    #chat_model =  ChatVertexAI()
     chat_model = ChatModel.from_pretrained("chat-bison@001")
     parameters = {
          "temperature": 0.2,

@@ -67,8 +67,9 @@ def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressu
         }
         response = generate_response(user_input,health_instance)
         st.session_state.past.append(user_input)
-        st.session_state.generated.append(response.text)
-        st.session_state["chat_history"].append((user_input, response.text))
+        #st.session_state.generated.append(response.text)
+        st.write(f"Response from Model: {response.text}")
+        #st.session_state["chat_history"].append((user_input, response.text))
         
     if st.session_state['generated']:
         for i in range(len(st.session_state['generated'])):
