@@ -19,7 +19,7 @@ def generate_response(prompt, health_instance):
     
     return response
 
-def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressure_h, blood_pressure_l, heart_disease):
+def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressure_h, blood_pressure_l, heart_disease, alcohol,cholesterol):
   bmi=weight/(height/100**2)
   bmi=round(bmi,2)
   hypertension=0
@@ -35,6 +35,11 @@ def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressu
    "hypertension": str(hypertension),
    "heart_disease": str(heart_disease)
   }
+  
+  predictions = predict_health(project= "rick-vertex-ai", endpoint_id=diabetes_endpoint, instance_dict=diabetes_instance)
+  for prediction in predictions:
+    st.write(" prediction:", dict(prediction))
+    diabetes_risk=str(round(dict(prediction)["score"][1],2))
   health_instance={
        "gender" : gender,
        "age" : age,
@@ -44,11 +49,11 @@ def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressu
        "blood_glucose_level": glucose,
        "blood_pressure_h": blood_pressure_h,
        "blood_pressure_l": blood_pressure_l,
-       "heart_disease": heart_disease
-        }
-  predictions = predict_health(project= "rick-vertex-ai", endpoint_id=diabetes_endpoint, instance_dict=diabetes_instance)
-  for prediction in predictions:
-    st.write(" prediction:", dict(prediction))
+       "heart_disease": heart_disease,
+       "diabetes_risk": diabetes_risk,
+       "alcohol": alcohol,
+       "cholesterol": cholesterol
+  }
 
   if "generated" not in st.session_state:
     st.session_state["generated"] = ["I'm health assistant, How may I help you?"]
@@ -99,8 +104,6 @@ def request_heart_disease(age, gender, height, weight, smoking, glucose, blood_p
   for prediction in predictions:
     st.write(" prediction:", dict(prediction))
 
-
-
 st.set_page_config(layout="wide")
 st.title("Personal Health Profile")
 # Create a form
@@ -113,8 +116,6 @@ with st.form("Health Profile Form"):
   gender = st.selectbox("Gender", ["male", "female"])
   height = st.number_input("Height (cm)", value=160, step=1)
   weight = st.number_input("Weight (kg)",value=50, step=1)
-  drinking_option = st.selectbox("Drinking", yes_no_options)
-  drinking=yes_no_options.index(drinking_option)
   smoking = st.selectbox("Smoking", ["never","former","No info","current","ever","not current"])
   
   heart_disease_option = st.selectbox("Heart Disease", yes_no_options)
@@ -123,10 +124,11 @@ with st.form("Health Profile Form"):
   alcohol_option = st.selectbox("Alcohol", yes_no_options)
   alcohol=yes_no_options.index(alcohol_option)  
   glucose = st.number_input("Glucose (mg/dL)",value=80, step=1)
+  cholesterol = st.number_input("Cholesterol (mg/dL)",value=150, step=1)
   blood_pressure_h = st.number_input("Blood Pressure (H)",value=100, step=1)
   blood_pressure_l = st.number_input("Blood Pressure (L)",value=70, step=1)
   submitted = st.form_submit_button("Save")
   if submitted:
-       request_diabetes(age, gender, height, weight, smoking,  glucose, blood_pressure_h, blood_pressure_l, heart_disease)
+       request_diabetes(age, gender, height, weight, smoking,  glucose, blood_pressure_h, blood_pressure_l, heart_disease, alcohol,cholesterol)
 
 

@@ -37,10 +37,11 @@ Weight:  {weight}kg
 Height: {height}cm
 Fasting Glucose Level: {blood_glucose_level} mg/dL
 Smoke: {smoking_history}
-Diabetes Risks(0-1): 0.7, confidence level(0-1): 0.99
+Diabetes Risks(0-1): {diabetes_risk}
 Heart Disease history: {heart_disease}
 Blood Pressure(H/L): {blood_pressure_h}/{blood_pressure_l}
-
+Alcohol: {alcohol}}
+Cholesterol Level: {cholesterol}
 Provide answers based on information available from most recognized resources such as websites:
 https://diabetes.org/diabetes
 https://www.heart.org/
@@ -71,6 +72,10 @@ https://www.cdc.gov/heartdisease/index.htm
         heart_disease=health_instance["heart_disease"],
         blood_pressure_h=health_instance["blood_pressure_h"],
         blood_pressure_l=health_instance["blood_pressure_l"],
+        diabetes_risk=health_instance["diabetes_risk"],
+        alchol=health_instance["alchol"],
+        cholesterol=health_instance["cholesterol"],
+        
         prompt=prompt
       ).to_messages()
     )
