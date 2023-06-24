@@ -63,15 +63,15 @@ I am health assistant, I can not answer your question out of my domain knowledge
 # get a chat completion from the formatted messages
     response=chat_model(
       chat_prompt.format_prompt(
-        age=health_instance.age,
-        gender=health_instance.gender,
-        weight=health_instance.weight,
-        height=health_instance.height,
-        blood_glucose_level=health_instance.blood_glucose_level,
-        smoking_history=health_instance.smoking_history,
-        heart_disease=health_instance.heart_disease,
-        blood_pressure_h=health_instance.blood_pressure_h,
-        blood_pressure_l=health_instance.blood_pressure_l 
+        age=health_instance["age"],
+        gender=health_instance["gender"],
+        weight=health_instance["weight"],
+        height=health_instance["height"],
+        blood_glucose_level=health_instance["blood_glucose_level"],
+        smoking_history=health_instance["smoking_history"],
+        heart_disease=health_instance["heart_disease"],
+        blood_pressure_h=health_instance["blood_pressure_h"],
+        blood_pressure_l=health_instance["blood_pressure_l"]
       ).to_messages()
     )
    
