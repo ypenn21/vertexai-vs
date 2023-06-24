@@ -63,7 +63,7 @@ def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressu
        "blood_pressure_l": blood_pressure_l,
        "heart_disease": heart_disease
         }
-        response = generate_response(user_input,)
+        response = generate_response(user_input,health_instance)
         st.session_state.past.append(user_input)
         st.session_state.generated.append(response)
         
