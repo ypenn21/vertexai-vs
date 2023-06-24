@@ -15,7 +15,7 @@ def generate_response(prompt, health_instance):
     response=predict_llm_health(project_id= "rick-vertex-ai",
                                 prompt = prompt, health_instance = health_instance
     )
-    st.session_state['generated'].append(response)
+    st.session_state['generated'].append(response.content)
     
     return response
 
