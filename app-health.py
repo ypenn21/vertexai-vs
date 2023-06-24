@@ -104,10 +104,10 @@ with st.form("Health Profile Form"):
 # Prompt for enter profile information
   yes_no_options=["no", "yes"]
   
-  age = st.number_input("Age")
+  age = st.number_input("Age", value=30, step=1)
   gender = st.selectbox("Gender", ["male", "female"])
-  height = st.number_input("Height (cm)")
-  weight = st.number_input("Weight (kg)")
+  height = st.number_input("Height (cm)", value=160, step=1)
+  weight = st.number_input("Weight (kg)",value=50, step=1)
   drinking_option = st.selectbox("Drinking", yes_no_options)
   drinking=yes_no_options.index(drinking_option)
   smoking = st.selectbox("Smoking", ["never","former","No info","current","ever","not current"])
@@ -117,9 +117,9 @@ with st.form("Health Profile Form"):
 
   alcohol_option = st.selectbox("Alcohol", yes_no_options)
   alcohol=yes_no_options.index(alcohol_option)  
-  glucose = st.number_input("Glucose (mg/dL)")
-  blood_pressure_h = st.number_input("Blood Pressure (H)")
-  blood_pressure_l = st.number_input("Blood Pressure (L)")
+  glucose = st.number_input("Glucose (mg/dL)",value=80, step=1)
+  blood_pressure_h = st.number_input("Blood Pressure (H)",value=100, step=1)
+  blood_pressure_l = st.number_input("Blood Pressure (L)",value=70, step=1)
   submitted = st.form_submit_button("Save")
   if submitted:
        request_diabetes(age, gender, height, weight, smoking,  glucose, blood_pressure_h, blood_pressure_l, heart_disease)
