@@ -8,7 +8,7 @@ from google.protobuf.struct_pb2 import Value
 
 def predict_llm_health(
     project_id: str,
-    content: str,
+    prompt: str,
     health_instance
     ) :
     vertexai.init(project="rick-vertex-ai", location="us-central1")
@@ -43,7 +43,7 @@ https://www.cdc.gov/heartdisease/index.htm
 Only answer personal health related questions, for other question, with following answer:
 I am health assistant, I can not answer your question out of my domain knowledge""",
 )
-    response = chat.send_message(content=content, parameters=parameters)
+    response = chat.send_message(prompt, **parameters)
     #print("response")
     #print(" deployed_model_id:", response.deployed_model_id)
     # See gs://google-cloud-aiplatform/schema/predict/prediction/tabular_classification

@@ -13,7 +13,7 @@ def get_text():
 
 def generate_response(prompt, health_instance):
     response=predict_llm_health(project_id= "rick-vertex-ai",
-                                content = prompt, health_instance = health_instance
+                                prompt = prompt, health_instance = health_instance
     )
     st.session_state['generated'].append(response)
     
