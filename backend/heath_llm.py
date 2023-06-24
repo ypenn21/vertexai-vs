@@ -71,7 +71,8 @@ I am health assistant, I can not answer your question out of my domain knowledge
         smoking_history=health_instance["smoking_history"],
         heart_disease=health_instance["heart_disease"],
         blood_pressure_h=health_instance["blood_pressure_h"],
-        blood_pressure_l=health_instance["blood_pressure_l"]
+        blood_pressure_l=health_instance["blood_pressure_l"],
+        prompt=prompt
       ).to_messages()
     )
    
