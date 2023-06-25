@@ -38,7 +38,7 @@ def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressu
   
   predictions = predict_health(project= "rick-vertex-ai", endpoint_id=diabetes_endpoint, instance_dict=diabetes_instance)
   for prediction in predictions:
-    st.write(" prediction:", dict(prediction))
+    st.write("Diabetes model risks:", dict(prediction))
     diabetes_risk=str(round(dict(prediction)["scores"][1],4))
   health_instance={
        "gender" : gender,
