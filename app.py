@@ -1,88 +1,134 @@
+
 import streamlit as st
+# Title: Personal Health Profile
+import os
+from backend.heath_llm import predict_health, predict_llm_health
+from typing import Dict
 from streamlit_chat import message
 from streamlit_extras.colored_header import colored_header
-from streamlit_extras.add_vertical_space import add_vertical_space
-import os
-from backend.backend import run_g_llm
-def get_documents():
-   if "documents" not in st.session_state:
-      uploaded_file = st.file_uploader("Upload your file here...")
-      if uploaded_file is not None:
-        documents=uploaded_file.getvalue().decode('utf-8')
-        st.session_state["documents"]=documents
-        return documents
-def get_text(instruction: str = "You: "):
-    input_text = st.text_input(instruction, "", key=f"input-{instruction}")
+
+def get_text():
+    input_text = st.text_input("You: ", "", key="input")
     return input_text
 
-def get_url():
-   if "url" not in st.session_state:
-      url = st.text_input(
-          "Enter the URL of the file you want to upload",
-          "https://www.google.com/",
-          key="url",
-      )
-     
-   return url
-      
-st.set_page_config(page_title="Talk2File - An LLM-powered File Search")
-with st.sidebar:
-    st.title("🤗💬 Talk2File")
-    st.markdown(
-        """
-    ## About
-    This Talk to File app is an LLM-powered chatbot built using:
-    - [LangChain 🦜🔗](https://python.langchain.com/en/latest/index.html)
-    - [Vector store FAISS](https://github.com/google-research/faiss)
-    - [Palm2 LLM Model](https://ai.google/discover/palm2)   
-    - [Streamlit](https://streamlit.io/)
-
-
-
-    """
+def generate_response(prompt, health_instance):
+    response=predict_llm_health(project_id= "rick-vertex-ai",
+                                prompt = prompt, health_instance = health_instance
     )
-    add_vertical_space(5)
-    # api_key_container = st.container()
-    # with api_key_container:
-    #     palm_api_key = get_text(instruction="PALM2_API_KEY")
-    #     if palm_api_key:
-    #         os.environ["PALM_2_API_KEY"]
+    #st.session_state['generated'].append(response.content)
+    
+    return response
 
-if "generated" not in st.session_state:
-    st.session_state["generated"] = ["I'm ready, How may I help you?"]
-if "past" not in st.session_state:
+def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressure_h, blood_pressure_l, heart_disease, alcohol,cholesterol):
+  bmi=weight/(height/100**2)
+  bmi=round(bmi,2)
+  hypertension=0
+  if(blood_pressure_h>130):
+    hypertension=1
+  diabetes_endpoint="2830191308407046144"
+  diabetes_instance={
+   "gender" : gender,
+   "age" : str(age),
+   "smoking_history" : smoking,
+   "bmi": str(bmi),
+   "blood_glucose_level": str(glucose),
+   "hypertension": str(hypertension),
+   "heart_disease": str(heart_disease)
+  }
+  
+  predictions = predict_health(project= "rick-vertex-ai", endpoint_id=diabetes_endpoint, instance_dict=diabetes_instance)
+  for prediction in predictions:
+    st.write(" prediction:", dict(prediction))
+    diabetes_risk=str(round(dict(prediction)["scores"][1],4))
+  health_instance={
+       "gender" : gender,
+       "age" : age,
+       "height" : height,
+       "weight" : weight,
+       "smoking_history" : smoking,
+       "blood_glucose_level": glucose,
+       "blood_pressure_h": blood_pressure_h,
+       "blood_pressure_l": blood_pressure_l,
+       "heart_disease": heart_disease,
+       "diabetes_risk": diabetes_risk,
+       "alcohol": alcohol,
+       "cholesterol": cholesterol
+  }
+
+  if "generated" not in st.session_state:
+    st.session_state["generated"] = ["I'm health assistant, How may I help you?"]
+  if "past" not in st.session_state:
     st.session_state["past"] = ["Hi!"]
-if "chat_history" not in st.session_state:
+  if "chat_history" not in st.session_state:
     st.session_state["chat_history"] = []
-
-
-input_container = st.container()
-colored_header(label="", description="", color_name="blue-30")
-response_container = st.container()
-
-
-with input_container:
-    choice = st.radio("Select your choice: ", ('upload', 'url'))
-    if (choice == 'upload'):
-      st.session_state["url"] = []
-      get_documents()
-    else:
-      st.session_state["documents"] = []
-      get_url()
-    user_input = get_text(instruction="Ask: ")
-
-## Conditional display of AI generated responses as a function of user provided prompts
-with response_container:
+  st.session_state["health_instance"]=health_instance
+  input_container = st.container()
+  colored_header(label='', description='', color_name='blue-30')
+  response_container = st.container()
+  ## Applying the user input box
+  with input_container: 
+    user_input = get_text()
+  with response_container:
     if user_input:
-        with st.spinner("Generating response..."):
-            response = run_g_llm(
-                st.session_state["documents"], query=user_input, chat_history=st.session_state["chat_history"]
-            )
-            st.session_state.past.append(user_input)
-            st.session_state.generated.append(response["answer"])
-            st.session_state["chat_history"].append((user_input, response["answer"]))
-
-    if st.session_state["generated"]:
-        for i in range(len(st.session_state["generated"])):
-            message(st.session_state["past"][i], is_user=True, key=str(i) + "_user")
+       
+        response = generate_response(user_input,st.session_state["health_instance"])
+        st.session_state.past.append(user_input)
+        st.session_state.generated.append(response.content)
+        #st.write(f"Response from Model: {response.text}")
+        st.session_state["chat_history"].append((user_input, response.content))
+        
+    if st.session_state['generated']:
+        for i in range(len(st.session_state['generated'])):
+            message(st.session_state['past'][i], is_user=True, key=str(i) + '_user')
             message(st.session_state["generated"][i], key=str(i))
+  
+     #st.write(f"Response from Model: {response.text}")
+
+def request_heart_disease(age, gender, height, weight, smoking, glucose, blood_pressure_h, blood_pressure_l):
+  bmi=weight/(height/100**2)
+  bmi=round(bmi,2)
+  hypertension=0
+  if(blood_pressure_h>130):
+    hypertension=1
+  heart_endpoint="2863405355658903552"
+  heart_instance={
+   "gender" : gender,
+   "age" : str(age),
+   "smoking_history" : smoking,
+   "bmi": str(bmi),
+   "blood_glucose_level": str(glucose),
+   "hypertension": str(hypertension),
+   "heart_disease": "0"
+  }
+  predictions = predict_health(project= "rick-vertex-ai", endpoint_id=heart_endpoint, instance_dict=heart_instance)
+  for prediction in predictions:
+    st.write(" prediction:", dict(prediction))
+
+st.set_page_config(layout="wide")
+st.title("Personal Health Profile")
+# Create a form
+with st.form("Health Profile Form"):
+
+# Prompt for enter profile information
+  yes_no_options=["no", "yes"]
+  
+  age = st.number_input("Age", value=30, step=1)
+  gender = st.selectbox("Gender", ["male", "female"])
+  height = st.number_input("Height (cm)", value=160, step=1)
+  weight = st.number_input("Weight (kg)",value=50, step=1)
+  smoking = st.selectbox("Smoking", ["never","former","No info","current","ever","not current"])
+  
+  heart_disease_option = st.selectbox("Heart Disease", yes_no_options)
+  heart_disease=yes_no_options.index(heart_disease_option)
+
+  alcohol_option = st.selectbox("Alcohol", yes_no_options)
+  alcohol=yes_no_options.index(alcohol_option)  
+  glucose = st.number_input("Glucose (mg/dL)",value=80, step=1)
+  cholesterol = st.number_input("Cholesterol (mg/dL)",value=150, step=1)
+  blood_pressure_h = st.number_input("Blood Pressure (H)",value=100, step=1)
+  blood_pressure_l = st.number_input("Blood Pressure (L)",value=70, step=1)
+  submitted = st.form_submit_button("Save")
+  if submitted:
+       request_diabetes(age, gender, height, weight, smoking,  glucose, blood_pressure_h, blood_pressure_l, heart_disease, alcohol,cholesterol)
+
+
