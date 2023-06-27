@@ -41,11 +41,14 @@ def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressu
     #st.write("Diabetes model risks:", dict(prediction))
     diabetes_risk=round(dict(prediction)["scores"][1],4)
     if(diabetes_risk<0.2):
-       st.write("Diabetes risks level prediction: low")
+       st.markdown('<p class="big-font">Your diabetes risks level prediction: low</p>', unsafe_allow_html=True)
+       #st.write("Diabetes risks level prediction: low")
     elif(diabetes_risk>=0.2 and diabetes_risk<0.5):
-       st.write("Diabetes risks level prediction: medium")
+       st.markdown('<p class="big-font">Your diabetes risks level prediction: medium</p>', unsafe_allow_html=True)
+       #st.write("Diabetes risks level prediction: medium")
     else:
-       st.write("Diabetes risks level prediction: high")
+       st.markdown('<p class="big-font">Your diabetes risks level prediction: high</p>', unsafe_allow_html=True)
+       #st.write("Diabetes risks level prediction: high")
   health_instance={
        "gender" : gender,
        "age" : age,
@@ -60,7 +63,8 @@ def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressu
        "alcohol": alcohol,
        "cholesterol": cholesterol
   }
-  st.write("You may ask any health related question")
+  st.markdown('<p class="big-font">What can I help with any other health related question?</p>', unsafe_allow_html=True)
+  #st.write("You may ask any health related question")
   if "generated" not in st.session_state:
     st.session_state["generated"] = ["I'm health assistant, How may I help you?"]
   if "past" not in st.session_state:
@@ -114,7 +118,14 @@ st.set_page_config(layout="wide")
 st.title("Health Assistant")
 # Create a form
 with st.form("Health Profile"):
-  st.write("I am your health assistant to answer health questions, please provide your information to start with:")
+  st.markdown("""
+<style>
+.big-font {
+    font-size:300px I am your health assistant to answer health questions, please provide your information to start with:
+}
+</style>
+""", unsafe_allow_html=True)
+  #st.write("I am your health assistant to answer health questions, please provide your information to start with:")
 # Prompt for enter profile information
   col1,col2,col3=st.columns(3)
   yes_no_options=["no", "yes"]
