@@ -38,8 +38,14 @@ def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressu
   
   predictions = predict_health(project= "rick-vertex-ai", endpoint_id=diabetes_endpoint, instance_dict=diabetes_instance)
   for prediction in predictions:
-    st.write("Diabetes model risks:", dict(prediction))
+    #st.write("Diabetes model risks:", dict(prediction))
     diabetes_risk=str(round(dict(prediction)["scores"][1],4))
+    if(diabetes_risk<0.2):
+       st.write("Diabetes risks level prediction: low")
+    elif(diabetes_risk>=0.2 and diabetes_risk<0.5):
+       st.write("Diabetes risks level prediction: medium")
+    else:
+       st.write("Diabetes risks level prediction: high")
   health_instance={
        "gender" : gender,
        "age" : age,
@@ -54,7 +60,7 @@ def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressu
        "alcohol": alcohol,
        "cholesterol": cholesterol
   }
-
+  st.write("You may ask any health related question")
   if "generated" not in st.session_state:
     st.session_state["generated"] = ["I'm health assistant, How may I help you?"]
   if "past" not in st.session_state:
