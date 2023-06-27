@@ -105,29 +105,30 @@ def request_heart_disease(age, gender, height, weight, smoking, glucose, blood_p
     st.write(" prediction:", dict(prediction))
 
 st.set_page_config(layout="wide")
-st.title("Personal Health Profile")
+st.title("Health Assistant")
 # Create a form
-with st.form("Health Profile Form"):
+with st.form("Health Profile"):
 
 # Prompt for enter profile information
+  col1,col2,col3=st.beta_columns(3)
   yes_no_options=["no", "yes"]
-  
-  age = st.number_input("Age", value=30, step=1)
-  gender = st.selectbox("Gender", ["male", "female"])
-  height = st.number_input("Height (cm)", value=160, step=1)
-  weight = st.number_input("Weight (kg)",value=50, step=1)
-  smoking = st.selectbox("Smoking", ["never","former","No info","current","ever","not current"])
-  
-  heart_disease_option = st.selectbox("Heart Disease", yes_no_options)
-  heart_disease=yes_no_options.index(heart_disease_option)
-
-  alcohol_option = st.selectbox("Alcohol", yes_no_options)
-  alcohol=yes_no_options.index(alcohol_option)  
-  glucose = st.number_input("Glucose (mg/dL)",value=80, step=1)
-  cholesterol = st.number_input("Cholesterol (mg/dL)",value=150, step=1)
-  blood_pressure_h = st.number_input("Blood Pressure (H)",value=100, step=1)
-  blood_pressure_l = st.number_input("Blood Pressure (L)",value=70, step=1)
-  submitted = st.form_submit_button("Save")
+  with col1: 
+    age = st.number_input("Age", value=40, step=1)
+    gender = st.selectbox("Gender", ["male", "female"])
+    height = st.number_input("Height (cm)", value=170, step=1)
+    weight = st.number_input("Weight (kg)",value=60, step=1)
+  with col2:
+    smoking = st.selectbox("Smoking", ["never","former","No info","current","ever","not current"])
+    heart_disease_option = st.selectbox("Heart Disease", yes_no_options)
+    heart_disease=yes_no_options.index(heart_disease_option)
+    alcohol_option = st.selectbox("Alcohol", yes_no_options)
+    alcohol=yes_no_options.index(alcohol_option)  
+  with col3:
+    glucose = st.number_input("Glucose (mg/dL)",value=80, step=1)
+    cholesterol = st.number_input("Cholesterol (mg/dL)",value=180, step=1)
+    blood_pressure_h = st.number_input("Blood Pressure (H)",value=120, step=1)
+    blood_pressure_l = st.number_input("Blood Pressure (L)",value=70, step=1)
+  submitted = st.form_submit_button("Ask")
   if submitted:
        request_diabetes(age, gender, height, weight, smoking,  glucose, blood_pressure_h, blood_pressure_l, heart_disease, alcohol,cholesterol)
 
