@@ -121,10 +121,10 @@ with st.form("Health Profile"):
   st.markdown("""
 <style>
 .big-font {
-    font-size:50px 
-    color: blue
+    font-size: 50px; 
+    color: blue;
 }
-</style> <p> I am your health assistant to answer health questions, please provide your information to start with:</p>
+</style>
 """, unsafe_allow_html=True)
   st.markdown('<p class="big-font">I am your health assistant to answer health questions, please provide your information to start with:</p>', unsafe_allow_html=True)
   #st.write("I am your health assistant to answer health questions, please provide your information to start with:")
