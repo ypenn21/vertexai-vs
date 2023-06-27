@@ -39,7 +39,7 @@ def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressu
   predictions = predict_health(project= "rick-vertex-ai", endpoint_id=diabetes_endpoint, instance_dict=diabetes_instance)
   for prediction in predictions:
     #st.write("Diabetes model risks:", dict(prediction))
-    diabetes_risk=str(round(dict(prediction)["scores"][1],4))
+    diabetes_risk=round(dict(prediction)["scores"][1],4)
     if(diabetes_risk<0.2):
        st.write("Diabetes risks level prediction: low")
     elif(diabetes_risk>=0.2 and diabetes_risk<0.5):
@@ -56,7 +56,7 @@ def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressu
        "blood_pressure_h": blood_pressure_h,
        "blood_pressure_l": blood_pressure_l,
        "heart_disease": heart_disease,
-       "diabetes_risk": diabetes_risk,
+       "diabetes_risk": str(diabetes_risk),
        "alcohol": alcohol,
        "cholesterol": cholesterol
   }
@@ -114,7 +114,7 @@ st.set_page_config(layout="wide")
 st.title("Health Assistant")
 # Create a form
 with st.form("Health Profile"):
-
+  st.write("I am your health assistant to answer health questions, please provide your information to start with:")
 # Prompt for enter profile information
   col1,col2,col3=st.columns(3)
   yes_no_options=["no", "yes"]
