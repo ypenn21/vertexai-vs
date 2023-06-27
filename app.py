@@ -20,7 +20,7 @@ def generate_response(prompt, health_instance):
     return response
 
 def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressure_h, blood_pressure_l, heart_disease, alcohol,cholesterol):
-  bmi=weight/(height/100**2)
+  bmi=weight/((height/100)**2)
   bmi=round(bmi,2)
   hypertension=0
   if(blood_pressure_h>130):
