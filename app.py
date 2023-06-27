@@ -115,7 +115,11 @@ def request_heart_disease(age, gender, height, weight, smoking, glucose, blood_p
     st.write(" prediction:", dict(prediction))
 
 st.set_page_config(layout="wide")
-st.title("Health Assistant")
+st.title("My Health Assistant")
+st.image(
+            "https://www.cdc.gov/diabetes/images/managing/Social-heart-disease-image.jpg?_=22582",
+            width=400, # Manually Adjust the width of the image as per requirement
+        )
 # Create a form
 with st.form("Health Profile"):
   st.markdown("""
