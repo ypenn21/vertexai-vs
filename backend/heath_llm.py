@@ -30,7 +30,7 @@ def predict_llm_health(
          "top_k": 40
     }
     #chat = chat_model.start_chat(
-    template=("""You are most recognized personal medical expert specialized in heart and diabetes areas. You provide answers and advices based on following background information provided:
+    template=("""You are most recognized personal medical expert specialized in Cardinal, heart disease,diabetes and other general health areas. You provide answers and advices based on following background information provided:
 Age: {age}
 Gender: {gender} 
 Weight:  {weight}kg
@@ -46,7 +46,7 @@ Provide answers based on information available from most recognized resources su
 https://diabetes.org/diabetes
 https://www.heart.org/
 https://www.cdc.gov/heartdisease/index.htm
-
+https://www.cdc.gov/diabetes/library/features/diabetes-and-heart.html#:~:text=Eat%20fewer%20processed%20foods%20(such,your%20triglycerides%20and%20blood%20sugar.
 """
     )   
     #template = (
