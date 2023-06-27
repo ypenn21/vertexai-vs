@@ -110,7 +110,7 @@ st.title("Health Assistant")
 with st.form("Health Profile"):
 
 # Prompt for enter profile information
-  col1,col2,col3=st.beta_columns(3)
+  col1,col2,col3=st.columns(3)
   yes_no_options=["no", "yes"]
   with col1: 
     age = st.number_input("Age", value=40, step=1)
