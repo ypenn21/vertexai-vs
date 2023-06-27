@@ -121,7 +121,7 @@ with st.form("Health Profile"):
   st.markdown("""
 <style>
 .big-font {
-    font-size: 50px; 
+    font-size: 30px; 
     color: blue;
 }
 </style>
