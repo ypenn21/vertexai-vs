@@ -84,7 +84,6 @@ def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressu
   ## Applying the user input box
   with input_container: 
     user_input = st.text_input("You", "", key="input-you")
-  with response_container:
     if user_input:
        
         response = generate_response(user_input,st.session_state["health_instance"])
@@ -92,6 +91,8 @@ def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressu
         st.session_state.generated.append(response.content)
         #st.write(f"Response from Model: {response.text}")
         st.session_state["chat_history"].append((user_input, response.content))
+  with response_container:
+    
         
     if st.session_state['generated']:
         for i in range(len(st.session_state['generated'])):
