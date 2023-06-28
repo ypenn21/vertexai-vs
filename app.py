@@ -158,6 +158,7 @@ with page_container:
   #submitted = st.form_submit_button("Ask")
   submitted = st.button("Ask")
   if submitted:
+       submitted.enabled=False
        request_diabetes(age, gender, height, weight, smoking,  glucose, blood_pressure_h, blood_pressure_l, heart_disease, alcohol,cholesterol)
 
 
