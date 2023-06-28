@@ -7,9 +7,11 @@ from typing import Dict
 from streamlit_chat import message
 from streamlit_extras.colored_header import colored_header
 
-def get_text():
-    input_text = st.text_input("You", "", key="input-you")
-    return input_text
+#def get_text():
+#    input_text = st.text_input("You", "", key="input-you")
+#    if(input_text):
+       
+#    return input_text
 
 def generate_response(prompt, health_instance):
     response=predict_llm_health(project_id= "rick-vertex-ai",
@@ -81,7 +83,7 @@ def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressu
   response_container = st.container()
   ## Applying the user input box
   with input_container: 
-    user_input = get_text()
+    user_input = st.text_input("You", "", key="input-you")
   with response_container:
     if user_input:
        
