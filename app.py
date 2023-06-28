@@ -46,8 +46,11 @@ def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressu
     elif(diabetes_risk>=0.2 and diabetes_risk<0.5):
        st.markdown('<p class="big-font">Your diabetes risks level prediction: medium</p>', unsafe_allow_html=True)
        #st.write("Diabetes risks level prediction: medium")
-    else:
+    elif(diabetes_risk>=0.5 and diabetes_risk<0.75):
        st.markdown('<p class="big-font">Your diabetes risks level prediction: high</p>', unsafe_allow_html=True)
+       #st.write("Diabetes risks level prediction: high")
+    else:
+       st.markdown('<p class="big-font">Your diabetes risks level prediction: vey high</p>', unsafe_allow_html=True)
        #st.write("Diabetes risks level prediction: high")
   health_instance={
        "gender" : gender,
@@ -63,7 +66,7 @@ def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressu
        "alcohol": alcohol,
        "cholesterol": cholesterol
   }
-  st.markdown('<p class="big-font">What can I help with any other health related question?</p>', unsafe_allow_html=True)
+  st.markdown('<p class="prompt-font">What can I help with any other health related question?</p>', unsafe_allow_html=True)
   #st.write("You may ask any health related question")
   if "generated" not in st.session_state:
     st.session_state["generated"] = ["I'm health assistant, How may I help you?"]
@@ -125,8 +128,16 @@ with st.form("Health Profile"):
   st.markdown("""
 <style>
 .big-font {
-    font-size: 30px; 
+    font-size: 20px; 
     color: blue;
+}
+</style>
+""", unsafe_allow_html=True)
+  st.markdown("""
+<style>
+.prompt-font {
+    font-size: 20px; 
+    color: cyan;
 }
 </style>
 """, unsafe_allow_html=True)
