@@ -8,7 +8,7 @@ from streamlit_chat import message
 from streamlit_extras.colored_header import colored_header
 
 def get_text():
-    input_text = st.text_input("You: ", "", key="input")
+    input_text = health_form.text_input("You", "", key="input-you")
     return input_text
 
 def generate_response(prompt, health_instance):
@@ -66,6 +66,7 @@ def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressu
        "alcohol": alcohol,
        "cholesterol": cholesterol
   }
+  
   st.markdown('<p class="prompt-font">What can I help with any other health related question?</p>', unsafe_allow_html=True)
   #st.write("You may ask any health related question")
   if "generated" not in st.session_state:
@@ -97,25 +98,6 @@ def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressu
   
      #st.write(f"Response from Model: {response.text}")
 
-def request_heart_disease(age, gender, height, weight, smoking, glucose, blood_pressure_h, blood_pressure_l):
-  bmi=weight/(height/100**2)
-  bmi=round(bmi,2)
-  hypertension=0
-  if(blood_pressure_h>130):
-    hypertension=1
-  heart_endpoint="2863405355658903552"
-  heart_instance={
-   "gender" : gender,
-   "age" : str(age),
-   "smoking_history" : smoking,
-   "bmi": str(bmi),
-   "blood_glucose_level": str(glucose),
-   "hypertension": str(hypertension),
-   "heart_disease": "0"
-  }
-  predictions = predict_health(project= "rick-vertex-ai", endpoint_id=heart_endpoint, instance_dict=heart_instance)
-  for prediction in predictions:
-    st.write(" prediction:", dict(prediction))
 
 st.set_page_config(layout="wide")
 st.title("My Health Assistant")
@@ -124,7 +106,8 @@ st.image(
             width=400, # Manually Adjust the width of the image as per requirement
         )
 # Create a form
-with st.form("Health Profile"):
+health_form = st.form(key='my_form')
+with health_form:
   st.markdown("""
 <style>
 .big-font {
