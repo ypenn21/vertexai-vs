@@ -84,7 +84,7 @@ def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressu
   ## Applying the user input box
   with input_container: 
     user_input = st.text_input("You", "", key="input-you")
-    m_button=st.button("Ask")
+    m_button=st.button("Ask", key='m_button')
     if(m_button):
         response = generate_response(user_input,st.session_state["health_instance"])
         st.session_state.past.append(user_input)
