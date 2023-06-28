@@ -106,8 +106,9 @@ st.image(
             width=400, # Manually Adjust the width of the image as per requirement
         )
 # Create a form
-health_form = st.form(key='my_form')
-with health_form:
+#health_form = st.form(key='my_form')
+page_container=st.container()
+with page_container:
   st.markdown("""
 <style>
 .big-font {
@@ -145,7 +146,8 @@ with health_form:
     cholesterol = st.number_input("Cholesterol (mg/dL)",value=180, step=1)
     blood_pressure_h = st.number_input("Blood Pressure (H)",value=120, step=1)
     blood_pressure_l = st.number_input("Blood Pressure (L)",value=70, step=1)
-  submitted = st.form_submit_button("Ask")
+  #submitted = st.form_submit_button("Ask")
+  submitted = st.button("Ask")
   if submitted:
        request_diabetes(age, gender, height, weight, smoking,  glucose, blood_pressure_h, blood_pressure_l, heart_disease, alcohol,cholesterol)
 
