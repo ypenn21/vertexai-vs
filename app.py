@@ -128,20 +128,20 @@ with st.form("Health Profile"):
   st.markdown("""
 <style>
 .big-font {
-    font-size: 20px; 
-    color: navy;
+    font-size: 30px; 
+    color: green;
 }
 </style>
 """, unsafe_allow_html=True)
   st.markdown("""
 <style>
 .prompt-font {
-    font-size: 20px; 
-    color: blue;
+    font-size: 30px; 
+    color: navy;
 }
 </style>
 """, unsafe_allow_html=True)
-  st.markdown('<p class="big-font">I am your health assistant to answer health questions, please provide your information to start with:</p>', unsafe_allow_html=True)
+  st.markdown('<p class="prompt-font">I am your health assistant to answer health questions, please provide your information to start with:</p>', unsafe_allow_html=True)
   #st.write("I am your health assistant to answer health questions, please provide your information to start with:")
 # Prompt for enter profile information
   col1,col2,col3=st.columns(3)
