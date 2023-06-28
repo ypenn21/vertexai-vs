@@ -68,44 +68,7 @@ def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressu
        "alcohol": alcohol,
        "cholesterol": cholesterol
   }
-  
-  st.markdown('<p class="prompt-font">What can I help with any other health related question?</p>', unsafe_allow_html=True)
-  #st.write("You may ask any health related question")
-  if "generated" not in st.session_state:
-    st.session_state["generated"] = ["I'm health assistant, How may I help you?"]
-  if "past" not in st.session_state:
-    st.session_state["past"] = ["Hi!"]
-  if "chat_history" not in st.session_state:
-    st.session_state["chat_history"] = []
   st.session_state["health_instance"]=health_instance
-  input_container = st.container()
-  colored_header(label='', description='', color_name='blue-30')
-  response_container = st.container()
-  ## Applying the user input box
-  with input_container: 
-    user_input = st.text_input("You", "", key="input-you")
-    m_button=st.button("Ask", key='m_button')
-    if(m_button):
-        response = generate_response(user_input,st.session_state["health_instance"])
-        st.session_state.past.append(user_input)
-        st.session_state.generated.append(response.content)
-        #st.write(f"Response from Model: {response.text}")
-        st.session_state["chat_history"].append((user_input, response.content))  
-  with response_container:
-    
-    if user_input:
-       
-        response = generate_response(user_input,st.session_state["health_instance"])
-        st.session_state.past.append(user_input)
-        st.session_state.generated.append(response.content)
-        #st.write(f"Response from Model: {response.text}")
-        st.session_state["chat_history"].append((user_input, response.content))  
-    if st.session_state['generated']:
-        for i in range(len(st.session_state['generated'])):
-            message(st.session_state['past'][i], is_user=True, key=str(i) + '_user')
-            message(st.session_state["generated"][i], key=str(i))
-  
-     #st.write(f"Response from Model: {response.text}")
 
 
 st.set_page_config(layout="wide")
@@ -158,7 +121,37 @@ with page_container:
   #submitted = st.form_submit_button("Ask")
   submitted = st.button("Ask")
   if submitted:
-       submitted.enabled=False
        request_diabetes(age, gender, height, weight, smoking,  glucose, blood_pressure_h, blood_pressure_l, heart_disease, alcohol,cholesterol)
+  if(st.session_state['health_instance']):
+      st.markdown('<p class="prompt-font">What can I help with any other health related question?</p>', unsafe_allow_html=True)
+  #st.write("You may ask any health related question")
+  if "generated" not in st.session_state:
+    st.session_state["generated"] = ["I'm health assistant, How may I help you?"]
+  if "past" not in st.session_state:
+    st.session_state["past"] = ["Hi!"]
+  if "chat_history" not in st.session_state:
+    st.session_state["chat_history"] = []
 
+  input_container = st.container()
+  colored_header(label='', description='', color_name='blue-30')
+  response_container = st.container()
+  ## Applying the user input box
+  with input_container: 
+    user_input = st.text_input("You", "", key="input-you")
+  with response_container:
+    
+    if user_input:
+       
+        response = generate_response(user_input,st.session_state["health_instance"])
+        st.session_state.past.append(user_input)
+        st.session_state.generated.append(response.content)
+        #st.write(f"Response from Model: {response.text}")
+        st.session_state["chat_history"].append((user_input, response.content))  
+    if st.session_state['generated']:
+        for i in range(len(st.session_state['generated'])):
+            message(st.session_state['past'][i], is_user=True, key=str(i) + '_user')
+            message(st.session_state["generated"][i], key=str(i))
+  
+     #st.write(f"Response from Model: {response.text}")
 
+ 
