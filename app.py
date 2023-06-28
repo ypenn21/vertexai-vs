@@ -13,6 +13,16 @@ from streamlit_extras.colored_header import colored_header
        
 #    return input_text
 
+if "health_instance" not in st.session_state:
+     st.session_state["generated"] = ""
+       #st.write("You may ask any health related question")
+if "generated" not in st.session_state:
+    st.session_state["generated"] = ["I'm health assistant, How may I help you?"]
+if "past" not in st.session_state:
+    st.session_state["past"] = ["Hi!"]
+if "chat_history" not in st.session_state:
+    st.session_state["chat_history"] = []
+
 def generate_response(prompt, health_instance):
     response=predict_llm_health(project_id= "rick-vertex-ai",
                                 prompt = prompt, health_instance = health_instance
@@ -122,15 +132,8 @@ with page_container:
   submitted = st.button("Ask")
   if submitted:
        request_diabetes(age, gender, height, weight, smoking,  glucose, blood_pressure_h, blood_pressure_l, heart_disease, alcohol,cholesterol)
-  if(st.session_state['health_instance']):
-      st.markdown('<p class="prompt-font">What can I help with any other health related question?</p>', unsafe_allow_html=True)
-  #st.write("You may ask any health related question")
-  if "generated" not in st.session_state:
-    st.session_state["generated"] = ["I'm health assistant, How may I help you?"]
-  if "past" not in st.session_state:
-    st.session_state["past"] = ["Hi!"]
-  if "chat_history" not in st.session_state:
-    st.session_state["chat_history"] = []
+  
+  
 
   input_container = st.container()
   colored_header(label='', description='', color_name='blue-30')
