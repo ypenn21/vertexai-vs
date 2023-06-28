@@ -129,7 +129,7 @@ with st.form("Health Profile"):
 <style>
 .big-font {
     font-size: 20px; 
-    color: blue;
+    color: navy;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -137,7 +137,7 @@ with st.form("Health Profile"):
 <style>
 .prompt-font {
     font-size: 20px; 
-    color: cyan;
+    color: blue;
 }
 </style>
 """, unsafe_allow_html=True)
