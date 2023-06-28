@@ -1,9 +1,7 @@
 
-# Generative AI Ask My Own Lib
+# Generative AI Ask My Health Assistant
 
-Chat with your your resources
-
-![Alt Text](https://github.com/g-emarco/github-assistant/blob/main/static/demo21.gif)
+Chat with your your AI Health Assistan
 
 
 ## Tech Stack

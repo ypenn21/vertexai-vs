@@ -129,12 +129,13 @@ with page_container:
     blood_pressure_h = st.number_input("Blood Pressure (H)",value=120, step=1)
     blood_pressure_l = st.number_input("Blood Pressure (L)",value=70, step=1)
   #submitted = st.form_submit_button("Ask")
-  submitted = st.button("Ask")
+  submitted = st.button("Go")
   if submitted:
        request_diabetes(age, gender, height, weight, smoking,  glucose, blood_pressure_h, blood_pressure_l, heart_disease, alcohol,cholesterol)
   
   
   if(st.session_state['health_instance']):
+    st.markdown('<p class="big-font">What can I help with any other health related question?</p>', unsafe_allow_html=True)
     input_container = st.container()
     colored_header(label='', description='', color_name='blue-30')
     response_container = st.container()
