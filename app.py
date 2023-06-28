@@ -135,7 +135,7 @@ with page_container:
   
   
   if(st.session_state['health_instance']):
-    st.markdown('<p class="big-font">What can I help with any other health related question?</p>', unsafe_allow_html=True)
+    st.markdown('<p class="prompt-font">What can I help with any other health related question?</p>', unsafe_allow_html=True)
     input_container = st.container()
     colored_header(label='', description='', color_name='blue-30')
     response_container = st.container()
