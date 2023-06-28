@@ -8,7 +8,7 @@ from streamlit_chat import message
 from streamlit_extras.colored_header import colored_header
 
 def get_text():
-    input_text = health_form.text_input("You", "", key="input-you")
+    input_text = st.text_input("You", "", key="input-you")
     return input_text
 
 def generate_response(prompt, health_instance):
