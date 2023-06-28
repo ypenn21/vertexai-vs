@@ -47,6 +47,7 @@ https://diabetes.org/diabetes
 https://www.heart.org/
 https://www.cdc.gov/heartdisease/index.htm
 https://www.cdc.gov/diabetes/library/features/diabetes-and-heart.html#:~:text=Eat%20fewer%20processed%20foods%20(such,your%20triglycerides%20and%20blood%20sugar.
+For questions outside nutrition, medical and health areas, just say: I am health AI assistant, I can not answer question outside of this domain. Try again!
 """
     )   
     #template = (
