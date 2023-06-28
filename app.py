@@ -134,23 +134,23 @@ with page_container:
        request_diabetes(age, gender, height, weight, smoking,  glucose, blood_pressure_h, blood_pressure_l, heart_disease, alcohol,cholesterol)
   
   
-
-  input_container = st.container()
-  colored_header(label='', description='', color_name='blue-30')
-  response_container = st.container()
+  if(st.session_state['health_instance']):
+    input_container = st.container()
+    colored_header(label='', description='', color_name='blue-30')
+    response_container = st.container()
   ## Applying the user input box
-  with input_container: 
-    user_input = st.text_input("You", "", key="input-you")
-  with response_container:
+    with input_container: 
+       user_input = st.text_input("You", "", key="input-you")
+    with response_container:
     
-    if user_input:
+      if user_input:
        
         response = generate_response(user_input,st.session_state["health_instance"])
         st.session_state.past.append(user_input)
         st.session_state.generated.append(response.content)
         #st.write(f"Response from Model: {response.text}")
         st.session_state["chat_history"].append((user_input, response.content))  
-    if st.session_state['generated']:
+      if st.session_state['generated']:
         for i in range(len(st.session_state['generated'])):
             message(st.session_state['past'][i], is_user=True, key=str(i) + '_user')
             message(st.session_state["generated"][i], key=str(i))
