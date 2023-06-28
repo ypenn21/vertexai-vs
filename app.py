@@ -14,7 +14,7 @@ from streamlit_extras.colored_header import colored_header
 #    return input_text
 
 if "health_instance" not in st.session_state:
-     st.session_state["generated"] = ""
+     st.session_state["health_instance"] = ""
        #st.write("You may ask any health related question")
 if "generated" not in st.session_state:
     st.session_state["generated"] = ["I'm health assistant, How may I help you?"]
