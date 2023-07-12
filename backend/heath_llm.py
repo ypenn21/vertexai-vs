@@ -19,7 +19,7 @@ def predict_llm_health(
     prompt: str,
     health_instance
     ) :
-    vertexai.init(project="rick-vertex-ai", location="us-central1")
+    vertexai.init(project=project_id, location="us-central1")
     
     chat_model =  ChatVertexAI()
     #chat_model = ChatModel.from_pretrained("chat-bison@001")

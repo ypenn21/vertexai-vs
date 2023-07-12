@@ -18,12 +18,16 @@ Chat with your your AI Health Assistan
 
 **Runtime:** Cloud Run   🌲
 
+## Train the diabetes prediction model
+### Follow the instructions in the diabetes-model.ipynb notebook, open it from browser: https://github.com/rick-c-goog/vertexai-vs/blob/main/diabetes-model.ipynb. Click "Run in Colab" link or "Open in Vertex AI Workbench", follow all the steps in notebook, till the endpoint created. Note the endpoint id for later uses. 
 
 ## Environment Variables
 
 To run this project, you will need to add the following environment variables to your .env file
 
 `STREAMLIT_SERVER_PORT`
+`PROJECT_ID`
+`ENDPOINT_ID`
 
 
 ## Run Locally
@@ -76,9 +80,11 @@ gcloud services enable generativelanguage.googleapis.com
 
 ```
 
-2. Create a service account `vertex-ai-consumer` with the following roles:
-
+2. export environment variables:
 export PROJECT_ID=$(gcloud config get-value project)
+export ENDPOINT_ID=2061166487661445120  # replace with the health model trained in previous steps.
+
+3. Create a service account `vertex-ai-consumer` with the following roles:
 
 
 ```bash
@@ -121,6 +127,6 @@ docker push us-east1-docker.pkg.dev/$PROJECT_ID/app/vertex-vs:latest
     --region=us-east1 \
     --service-account=vertex-ai-consumer@$PROJECT_ID.iam.gserviceaccount.com \
     --allow-unauthenticated \
-    --set-env-vars="STREAMLIT_SERVER_PORT=8080" 
+    --set-env-vars="STREAMLIT_SERVER_PORT=8080, PROJECT_ID=$PROJECT_ID, ENDPOINT_ID=$ENDPOINT_ID" 
    
 ```

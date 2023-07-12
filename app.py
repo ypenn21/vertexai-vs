@@ -37,7 +37,7 @@ def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressu
   hypertension=0
   if(blood_pressure_h>130):
     hypertension=1
-  diabetes_endpoint="2830191308407046144"
+  diabetes_endpoint=os.environ.get('ENDPOINT_ID')
   diabetes_instance={
    "gender" : gender,
    "age" : str(age),
@@ -48,7 +48,7 @@ def request_diabetes(age, gender, height, weight, smoking, glucose, blood_pressu
    "heart_disease": str(heart_disease)
   }
   
-  predictions = predict_health(project= "rick-vertex-ai", endpoint_id=diabetes_endpoint, instance_dict=diabetes_instance)
+  predictions = predict_health(project= os.environ.get('PROJECT_ID'), endpoint_id=diabetes_endpoint, instance_dict=diabetes_instance)
   for prediction in predictions:
     #st.write("Diabetes model risks:", dict(prediction))
     diabetes_risk=round(dict(prediction)["scores"][1],4)
