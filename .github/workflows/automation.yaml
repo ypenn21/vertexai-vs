@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - $default_branch
-
 env:
   PROJECT_ID: rick-vertex-ai # TODO: update Google Cloud project id
   GAR_LOCATION: app # TODO: update Artifact Registry location
