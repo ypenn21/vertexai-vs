@@ -24,7 +24,7 @@ if "chat_history" not in st.session_state:
     st.session_state["chat_history"] = []
 
 def generate_response(prompt, health_instance):
-    response=predict_llm_health(project_id= "rick-vertex-ai",
+    response=predict_llm_health(project_id= "epam-394023",
                                 prompt = prompt, health_instance = health_instance
     )
     #st.session_state['generated'].append(response.content)
